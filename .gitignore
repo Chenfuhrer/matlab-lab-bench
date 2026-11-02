@@ -1,0 +1,6 @@
+.DS_Store
+# build.py 生成：index.html 提交（GitHub Pages 用），其余不提交
+dist/
+MATLAB实验台.html
+test/engine.js
+test/reports/

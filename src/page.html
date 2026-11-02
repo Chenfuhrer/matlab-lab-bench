@@ -1,0 +1,1514 @@
+<title>MATLAB 实验台</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Serif+SC:wght@600;900&display=swap">
+<style>
+/* 版式：工程坐标纸上的实验手册。左侧章节目录，中间正文栏，底部抽屉式命令行窗口。
+   图线颜色取自 MATLAB 默认 colororder，代码配色取自 MATLAB 编辑器。 */
+:root {
+  --bg: #F2F4F7; --surface: #FFFFFF; --raised: #FAFBFC;
+  --ink: #142030; --ink-2: #364354; --muted: #627083; --line: #D8DFE7; --line-2: #E7ECF1;
+  --accent: #0072BD; --accent-ink: #005C99; --accent-soft: #E2EEF8; --on-accent: #FFFFFF;
+  --signal: #C4470F; --signal-soft: #FBEDE4;
+  --ok: #2B7A4B; --ok-soft: #E3F2E9; --err: #B3261E; --err-soft: #FBEAE8; --warn: #835500; --warn-soft: #FFF3D9;
+  --code-bg: #F7F9FB; --sel: rgba(0, 114, 189, .22);
+  --hl-kw: #0000FF; --hl-com: #228B22; --hl-str: #A020F0; --hl-num: #142030;
+  --fig-bg: #FFFFFF; --ax-bg: #FFFFFF; --fig-fg: #1F2328; --fig-axis: #262626; --fig-grid: rgba(38, 38, 38, .15); --fig-muted: #7A8594;
+  --c1: #0072BD; --c2: #D95319; --c3: #EDB120; --c4: #7E2F8E; --c5: #77AC30; --c6: #4DBEEE; --c7: #A2142F;
+  --grid-major: rgba(0, 114, 189, .10); --grid-minor: rgba(0, 114, 189, .045);
+  --shadow: 0 1px 2px rgba(20, 32, 48, .06), 0 8px 24px rgba(20, 32, 48, .06);
+  --font-display: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-fig: Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --top: 56px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1218; --surface: #131B24; --raised: #18222D;
+    --ink: #E3E9F0; --ink-2: #C0CAD6; --muted: #8B9AAC; --line: #263240; --line-2: #1D2833;
+    --accent: #4BA3E6; --accent-ink: #7DBDF0; --accent-soft: #13304A; --on-accent: #06121D;
+    --signal: #F08A52; --signal-soft: #3A2316;
+    --ok: #63C28F; --ok-soft: #12301F; --err: #FF8E84; --err-soft: #3B1816; --warn: #F2C063; --warn-soft: #33270C;
+    --code-bg: #0F161E; --sel: rgba(75, 163, 230, .32);
+    --hl-kw: #72A9FF; --hl-com: #6CC07A; --hl-str: #D69CFF; --hl-num: #E3E9F0;
+    --fig-bg: #18212B; --ax-bg: #18212B; --fig-fg: #E3E9F0; --fig-axis: #C6CFD9; --fig-grid: rgba(198, 207, 217, .16); --fig-muted: #8B9AAC;
+    --c1: #3FA2F0; --c2: #F47B3B; --c3: #F2C14E; --c4: #B784D3; --c5: #9ACB57; --c6: #6FD3F7; --c7: #E5566E;
+    --grid-major: rgba(75, 163, 230, .10); --grid-minor: rgba(75, 163, 230, .045);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1218; --surface: #131B24; --raised: #18222D;
+  --ink: #E3E9F0; --ink-2: #C0CAD6; --muted: #8B9AAC; --line: #263240; --line-2: #1D2833;
+  --accent: #4BA3E6; --accent-ink: #7DBDF0; --accent-soft: #13304A; --on-accent: #06121D;
+  --signal: #F08A52; --signal-soft: #3A2316;
+  --ok: #63C28F; --ok-soft: #12301F; --err: #FF8E84; --err-soft: #3B1816; --warn: #F2C063; --warn-soft: #33270C;
+  --code-bg: #0F161E; --sel: rgba(75, 163, 230, .32);
+  --hl-kw: #72A9FF; --hl-com: #6CC07A; --hl-str: #D69CFF; --hl-num: #E3E9F0;
+  --fig-bg: #18212B; --ax-bg: #18212B; --fig-fg: #E3E9F0; --fig-axis: #C6CFD9; --fig-grid: rgba(198, 207, 217, .16); --fig-muted: #8B9AAC;
+  --c1: #3FA2F0; --c2: #F47B3B; --c3: #F2C14E; --c4: #B784D3; --c5: #9ACB57; --c6: #6FD3F7; --c7: #E5566E;
+  --grid-major: rgba(75, 163, 230, .10); --grid-minor: rgba(75, 163, 230, .045);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: calc(var(--top) + 16px); -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.78 var(--font-body); }
+a { color: var(--accent-ink); text-underline-offset: 3px; }
+code, kbd { font-family: var(--font-mono); font-size: .88em; font-variant-ligatures: none; }
+:not(pre) > code { background: var(--accent-soft); color: var(--ink); padding: .08em .38em; border-radius: 4px; }
+kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 .35em; background: var(--surface); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+button { font: inherit; color: inherit; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+
+/* ---------- 顶栏 ---------- */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--surface); border-bottom: 1px solid var(--line); }
+.topbar-in { height: var(--top); max-width: 1240px; margin: 0 auto; display: flex; align-items: center; gap: 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); min-width: 0; }
+.brand-mark { flex: none; width: 30px; height: 30px; border-radius: 7px; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font: 600 13px/1 var(--font-mono); letter-spacing: -.04em; }
+.brand-name { font: 900 18px/1 var(--font-display); letter-spacing: .02em; white-space: nowrap; }
+.top-spacer { flex: 1; }
+.prog { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.prog-bar { width: 96px; height: 6px; border-radius: 3px; background: var(--line-2); overflow: hidden; }
+.prog-bar i { display: block; height: 100%; width: calc(var(--p, 0) * 100%); background: var(--ok); border-radius: 3px; transition: width .3s; }
+.topbar .icon-btn { display: none; }
+@media (max-width: 960px) { .topbar .icon-btn { display: inline-flex; } }
+@media (max-width: 560px) { .topbar-in { gap: 10px; } .prog-bar, .pt-long { display: none; } .prog { font: 12px var(--font-mono); } .brand-name { font-size: 16px; } .topbar .prog { margin-left: auto; } }
+@media (max-width: 440px) { .brand { display: none; } }
+
+/* ---------- 按钮 ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 7px; border: 1px solid transparent; cursor: pointer; font-size: 14px; font-weight: 500; padding: 7px 14px; line-height: 1.2; white-space: nowrap; transition: background .15s, border-color .15s, color .15s; }
+.btn-sm { font-size: 13px; padding: 5px 11px; }
+.btn-xs { font-size: 12px; padding: 3px 9px; }
+.btn-run { background: var(--accent); color: var(--on-accent); }
+.btn-run:hover { background: var(--accent-ink); }
+.btn-ghost { background: transparent; border-color: var(--line); color: var(--ink-2); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent-ink); }
+.btn-console { background: var(--ink); color: var(--surface); font-family: var(--font-mono); font-size: 13px; }
+.btn-console:hover { background: var(--accent-ink); }
+.btn-console[aria-expanded="true"] { background: var(--accent); color: var(--on-accent); }
+
+/* ---------- 版面 ---------- */
+.layout { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.main { min-width: 0; max-width: 790px; padding-block: 0 96px; }
+body.console-open .main { padding-bottom: 52vh; }
+.toc { position: sticky; top: calc(var(--top) + env(safe-area-inset-top, 0px)); align-self: start; max-height: calc(100vh - var(--top)); overflow-y: auto; padding: 28px 4px 28px 0; }
+.toc-head { font-size: 12px; letter-spacing: .12em; color: var(--muted); margin: 0 0 10px 10px; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a { display: grid; grid-template-columns: 28px 1fr 16px; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: var(--ink-2); font-size: 14px; line-height: 1.4; }
+.toc a:hover { background: var(--surface); color: var(--ink); }
+.toc a.is-active { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.toc-n { font: 12px/1 var(--font-mono); color: var(--muted); }
+.toc a.is-active .toc-n { color: var(--accent-ink); }
+.toc-check { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--line); }
+.toc a.is-done .toc-check { border-color: var(--ok); background: var(--ok); box-shadow: inset 0 0 0 2.5px var(--surface); }
+.toc-foot { margin: 18px 10px 0; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+#toc-scrim { display: none; }
+@media (max-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .toc { position: fixed; z-index: 40; top: 0; bottom: 0; left: 0; width: min(300px, 86vw); max-height: none; background: var(--bg); border-right: 1px solid var(--line);
+    padding: calc(20px + env(safe-area-inset-top, 0px)) 12px calc(20px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); transform: translateX(-102%); transition: transform .22s; }
+  body.toc-open .toc { transform: none; box-shadow: var(--shadow); }
+  body.toc-open #toc-scrim { display: block; position: fixed; inset: 0; z-index: 35; background: rgba(8, 14, 20, .35); }
+  .main { max-width: none; }
+}
+
+/* ---------- 首屏 ---------- */
+.hero { margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))) 0; padding: 48px max(16px, env(safe-area-inset-left, 0px)) 44px;
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid-major) 1px, transparent 1px), linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px), linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px; background-position: -1px -1px; border-bottom: 1px solid var(--line); }
+.eyebrow { font: 600 12.5px/1.4 var(--font-mono); letter-spacing: .08em; color: var(--accent-ink); margin: 0 0 14px; }
+.hero h1 { font: 900 clamp(36px, 6.4vw, 60px)/1.08 var(--font-display); letter-spacing: .01em; margin: 0 0 18px; }
+.hero h1 .prompt-glyph { font-family: var(--font-mono); font-weight: 600; color: var(--accent); font-size: .62em; vertical-align: .18em; margin-right: .22em; letter-spacing: -.06em; }
+.lede { font-size: 18px; line-height: 1.75; color: var(--ink-2); max-width: 36em; margin: 0 0 24px; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0 0 28px; padding: 0; list-style: none; }
+.stats li { display: flex; align-items: baseline; gap: 8px; color: var(--muted); font-size: 14px; }
+.stats b { font: 600 24px/1 var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.howto { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 22px 0 0; padding: 0; list-style: none; }
+.howto li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+.howto b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 2px; }
+@media (max-width: 720px) { .howto { grid-template-columns: minmax(0, 1fr); } .hero { padding-top: 32px; } .lede { font-size: 16.5px; } }
+
+/* ---------- 章节 ---------- */
+.chapter { padding-top: 56px; }
+.ch-top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+.ch-num { font: 600 13px/1 var(--font-mono); color: var(--accent-ink); letter-spacing: .06em; }
+.ch-meta { font-size: 13px; color: var(--muted); }
+.chapter > h2 { font: 900 clamp(26px, 4vw, 34px)/1.25 var(--font-display); margin: 0 0 14px; letter-spacing: .01em; }
+.chapter h3 { font: 600 20px/1.45 var(--font-display); margin: 40px 0 8px; }
+.chapter h3 .sec { font: 600 13px var(--font-mono); color: var(--muted); margin-right: 8px; letter-spacing: 0; }
+.chapter p { margin: 10px 0; }
+.chapter ul, .chapter ol { padding-left: 1.3em; margin: 10px 0; }
+.learn { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; padding: 0; list-style: none; }
+.learn li { font-size: 13.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); }
+.ch-rule { border: 0; border-top: 1px solid var(--line); margin: 0 0 30px; }
+
+/* ---------- 提示框 ---------- */
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px 12px; margin: 18px 0; font-size: 15px; line-height: 1.72; }
+.note > :first-child { margin-top: 0; } .note > :last-child { margin-bottom: 0; }
+.note-tag { display: inline-block; font: 600 12px/1 var(--font-mono); letter-spacing: .04em; padding: 4px 8px; border-radius: 5px; margin: 2px 0 8px; }
+.note.tip .note-tag { background: var(--accent-soft); color: var(--accent-ink); }
+.note.trap { background: var(--signal-soft); border-color: transparent; }
+.note.trap .note-tag { background: var(--signal); color: #fff; }
+.note.py .note-tag { background: var(--line-2); color: var(--ink-2); }
+.note.model .note-tag { background: var(--ok-soft); color: var(--ok); }
+
+/* ---------- 表格 ---------- */
+.tbl-wrap { overflow-x: auto; margin: 16px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.55; }
+.tbl th, .tbl td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.tbl th { font-size: 12.5px; font-weight: 600; color: var(--muted); letter-spacing: .04em; background: var(--raised); white-space: nowrap; }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl td code { white-space: nowrap; }
+.tbl.err-tbl td:first-child { min-width: 15em; }
+.tbl .en { font: 12.5px/1.5 var(--font-mono); color: var(--ink); }
+.tbl .zh { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ---------- 代码单元 ---------- */
+.cell, .challenge { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); margin: 18px 0 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(20, 32, 48, .04); }
+.cell-head, .ch-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 8px 7px 14px; border-bottom: 1px solid var(--line-2); min-height: 44px; }
+.cell-label { font: 500 12.5px/1.35 var(--font-mono); color: var(--muted); min-width: 0; overflow-wrap: anywhere; }
+.cell-tools { display: flex; gap: 6px; flex: none; }
+.badge { font-size: 12px; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.badge-local { background: var(--warn-soft); color: var(--warn); }
+.ed { display: grid; background: var(--code-bg); }
+.ed:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+.ed-hl, .ed-ta { grid-area: 1 / 1; margin: 0; padding: 14px 16px; border: 0; font: 14px/1.65 var(--font-mono); font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0;
+  white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; tab-size: 4; letter-spacing: 0; min-width: 0; }
+.ed-hl { color: var(--ink); pointer-events: none; }
+.ed-ta { color: transparent; background: transparent; caret-color: var(--ink); resize: none; overflow: hidden; outline: none; width: 100%; height: 100%; -webkit-text-fill-color: transparent; }
+.ed-ta::selection { background: var(--sel); -webkit-text-fill-color: transparent; }
+.hl-kw { color: var(--hl-kw); } .hl-com { color: var(--hl-com); } .hl-str { color: var(--hl-str); } .hl-num { color: var(--hl-num); }
+.hl-sec { font-weight: 600; }
+.cell-out { padding: 12px 16px 14px; border-top: 1px solid var(--line-2); display: grid; gap: 10px; min-width: 0; }
+.cell-out:empty { display: none; }
+.out-text { margin: 0; font: 13.5px/1.55 var(--font-mono); font-variant-ligatures: none; white-space: pre; overflow-x: auto; color: var(--ink); min-width: 0; }
+.out-stderr { color: var(--err); }
+.out-empty { font-size: 13px; color: var(--muted); }
+.out-warn { font: 13px/1.55 var(--font-mono); color: var(--warn); background: var(--warn-soft); padding: 8px 12px; border-radius: 8px; white-space: pre-wrap; }
+.out-err { background: var(--err-soft); border-radius: 8px; padding: 10px 12px; display: grid; gap: 6px; }
+.out-err-msg { font: 13.5px/1.55 var(--font-mono); color: var(--err); white-space: pre-wrap; overflow-wrap: anywhere; }
+.out-err-line { font-size: 12.5px; color: var(--err); opacity: .85; }
+.out-err-hint { font-size: 14px; line-height: 1.65; color: var(--ink-2); }
+.out-err-hint b { display: inline-block; font-size: 12px; font-weight: 600; color: var(--err); border: 1px solid currentColor; border-radius: 4px; padding: 0 5px; margin-right: 8px; line-height: 1.6; }
+.cell.is-error .cell-head { border-bottom-color: var(--line-2); }
+.ref-box { display: grid; gap: 6px; }
+.ref-cap { font-size: 12.5px; color: var(--warn); }
+.ref-box .out-text { white-space: pre-wrap; }
+
+/* 图窗 */
+.mfig { margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--fig-bg); max-width: 640px; }
+.mfig-cap { display: flex; gap: 10px; align-items: baseline; padding: 6px 12px; border-bottom: 1px solid var(--line-2); background: var(--raised); font-size: 12.5px; color: var(--muted); }
+.mfig-id { font-family: var(--font-mono); color: var(--ink-2); }
+.mfig-t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mfig-t sup, .mfig-t sub { font-size: .75em; line-height: 0; }
+.mfig-svg { width: 100%; line-height: 0; }
+.mfig-svg svg { display: block; width: 100%; height: auto; max-width: 100%; }
+
+/* 线性索引示意 */
+.lin-demo { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin: 16px 0; }
+.lin-grid { display: grid; grid-template-columns: repeat(3, 56px); gap: 4px; }
+.lin-grid span { height: 52px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); display: grid; place-items: center; font: 600 17px/1 var(--font-mono); position: relative; }
+.lin-grid span sub { position: absolute; right: 6px; bottom: 5px; font: 11px/1 var(--font-mono); color: var(--signal); }
+.lin-grid span.c1 { background: var(--accent-soft); }
+.lin-cap { font-size: 14px; color: var(--ink-2); max-width: 24em; margin: 0; }
+
+/* ---------- 测验 ---------- */
+.quiz { margin: 34px 0 18px; border-top: 1px solid var(--line); padding-top: 18px; }
+.quiz-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.quiz-title { font: 600 20px/1.4 var(--font-display); margin: 0; }
+.quiz-score { font: 13px var(--font-mono); color: var(--muted); }
+.quiz.quiz-done .quiz-score { color: var(--ok); }
+.quiz-q { margin: 16px 0 22px; }
+.quiz-text { margin: 0 0 10px; font-weight: 500; }
+.quiz-n { font: 600 13px var(--font-mono); color: var(--accent-ink); margin-right: 10px; }
+.quiz-code { background: var(--code-bg); border: 1px solid var(--line-2); border-radius: 8px; padding: 10px 14px; font: 13.5px/1.6 var(--font-mono); margin: 0 0 10px; overflow-x: auto; }
+.quiz-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 620px) { .quiz-opts { grid-template-columns: minmax(0, 1fr); } }
+.quiz-opt { display: flex; align-items: flex-start; gap: 10px; text-align: left; padding: 9px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 14.5px; line-height: 1.5; }
+.quiz-opt:hover { border-color: var(--accent); }
+.quiz-key { flex: none; width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; font: 600 12px/1 var(--font-mono); background: var(--line-2); color: var(--ink-2); margin-top: 1px; }
+.quiz-opt.is-right { border-color: var(--ok); background: var(--ok-soft); }
+.quiz-opt.is-right .quiz-key { background: var(--ok); color: #fff; }
+.quiz-opt.is-wrong { border-color: var(--err); background: var(--err-soft); }
+.quiz-opt.is-wrong .quiz-key { background: var(--err); color: #fff; }
+.quiz-fb { font-size: 14.5px; line-height: 1.65; margin-top: 8px; }
+.quiz-fb b, .ch-result b { margin-right: 6px; }
+.fb-ok { color: var(--ink-2); } .fb-ok b { color: var(--ok); }
+.fb-no { color: var(--ink-2); } .fb-no b { color: var(--err); }
+
+/* ---------- 编程练习 ---------- */
+.challenge { border-color: var(--line); }
+.ch-tag { font: 600 12.5px var(--font-mono); color: var(--signal); letter-spacing: .04em; }
+.ch-state { font-size: 12.5px; color: var(--muted); padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); }
+.challenge.ch-solved .ch-state { color: var(--ok); border-color: var(--ok); background: var(--ok-soft); }
+.challenge .task { padding: 10px 16px 4px; font-size: 15px; }
+.challenge .task p { margin: 6px 0; }
+.ch-bar { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; padding: 10px 12px; border-top: 1px solid var(--line-2); }
+.ch-hint { margin: 0 16px 10px; padding: 10px 12px; background: var(--accent-soft); border-radius: 8px; font-size: 14.5px; }
+.ch-result { padding: 0 16px; font-size: 14.5px; }
+.ch-result:empty { display: none; }
+.ch-result:not(:empty) { padding: 10px 16px; border-top: 1px solid var(--line-2); }
+
+/* ---------- 章末 ---------- */
+.ch-end { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 26px; padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+.done-btn { display: inline-flex; align-items: center; gap: 10px; border: 0; background: none; cursor: pointer; font-size: 15px; font-weight: 500; padding: 4px 2px; color: var(--ink); }
+.done-box { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--line); display: grid; place-items: center; }
+.done-btn[aria-pressed="true"] .done-box { background: var(--ok); border-color: var(--ok); }
+.done-btn[aria-pressed="true"] .done-box::after { content: ""; width: 6px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; transform: translateY(-1px) rotate(45deg); }
+.done-btn[aria-pressed="true"] { color: var(--ok); }
+.next-link { font-size: 14.5px; text-decoration: none; font-weight: 500; }
+.next-link:hover { text-decoration: underline; }
+
+/* ---------- 函数速查 ---------- */
+.ref-tools { display: grid; gap: 12px; margin: 16px 0 10px; }
+.ref-search { display: flex; gap: 10px; align-items: center; }
+.ref-search input { flex: 1; min-width: 0; font: inherit; font-size: 15px; padding: 9px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.ref-search input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+#ref-count { font: 13px var(--font-mono); color: var(--muted); white-space: nowrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 13px; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: var(--ink-2); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.ref-name code { font-weight: 600; color: var(--accent-ink); background: none !important; padding: 0 !important; }
+.ref-usage { display: block; margin-top: 4px; font-size: 12.5px !important; color: var(--muted) !important; background: none !important; padding: 0 !important; white-space: normal !important; overflow-wrap: anywhere; }
+.ref-ex { width: 1%; white-space: nowrap; }
+.ws-empty { color: var(--muted); font-size: 14px; }
+
+/* ---------- 命令行窗口 ---------- */
+.console { position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; height: min(50vh, 520px); min-height: 300px; background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -10px 30px rgba(10, 20, 30, .12);
+  display: grid; grid-template-rows: auto minmax(0, 1fr); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.con-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--line-2);
+  padding: 6px max(12px, env(safe-area-inset-right, 0px)) 6px max(12px, env(safe-area-inset-left, 0px)); }
+.con-title { font: 600 13px var(--font-mono); color: var(--ink-2); }
+.con-tabs { display: none; gap: 4px; }
+.con-tab { border: 0; background: none; padding: 6px 10px; border-radius: 7px; font-size: 13.5px; cursor: pointer; color: var(--muted); white-space: nowrap; }
+.con-tab[aria-selected="true"] { background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+.con-actions { display: flex; gap: 6px; flex: none; }
+.con-body { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-rows: minmax(0, .9fr) minmax(0, 1.1fr); min-height: 0;
+  padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+.con-pane { min-width: 0; min-height: 0; overflow: auto; }
+.con-cmd { grid-row: 1 / 3; display: grid; grid-template-rows: minmax(0, 1fr) auto; border-right: 1px solid var(--line-2); overflow: hidden; }
+.con-ws { border-bottom: 1px solid var(--line-2); }
+.con-fig { padding: 10px; }
+.con-fig .mfig { max-width: none; }
+.pane-cap { position: sticky; top: 0; background: var(--surface); font-size: 12px; letter-spacing: .08em; color: var(--muted); padding: 8px 12px 6px; border-bottom: 1px solid var(--line-2); z-index: 1; }
+.cmd-log { overflow-y: auto; padding: 10px 14px; font: 13.5px/1.55 var(--font-mono); display: grid; align-content: start; gap: 6px; }
+.cmd-intro { font-family: var(--font-body); font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+.cmd-echo { white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); }
+.prompt { color: var(--accent); font-weight: 600; font-family: var(--font-mono); }
+.cmd-out { display: grid; gap: 6px; }
+.cmd-note { font-family: var(--font-body); font-size: 12.5px; color: var(--accent-ink); }
+.cmd-line { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 8px; padding: 6px 14px 10px; border-top: 1px solid var(--line-2); background: var(--code-bg); }
+.cmd-line .prompt { padding-top: 9px; font-size: 14px; }
+.cmd-ed { background: transparent; }
+.cmd-ed .ed-hl, .cmd-ed .ed-ta { padding: 8px 4px; font-size: 14px; }
+.cmd-ed:focus-within { box-shadow: none; }
+.ws { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ws th, .ws td { text-align: left; padding: 6px 12px; border-bottom: 1px solid var(--line-2); }
+.ws th { font-size: 12px; color: var(--muted); font-weight: 600; position: sticky; top: 0; background: var(--surface); }
+.ws-name { font-family: var(--font-mono); font-weight: 600; }
+.ws-val, .ws-cls { font-family: var(--font-mono); color: var(--ink-2); white-space: nowrap; }
+@media (max-width: 900px) {
+  .console { height: min(62vh, 560px); }
+  .con-title { display: none; }
+  .con-tabs { display: flex; min-width: 0; overflow-x: auto; }
+  .con-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+  .con-pane { display: none; grid-row: 1; border: 0; }
+  .console[data-tab="cmd"] .con-cmd, .console[data-tab="ws"] .con-ws, .console[data-tab="fig"] .con-fig { display: grid; }
+  .console[data-tab="ws"] .con-ws, .console[data-tab="fig"] .con-fig { display: block; }
+  .pane-cap { display: none; }
+  body.console-open .main { padding-bottom: 66vh; }
+}
+
+/* ---------- 页脚 ---------- */
+.foot { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+.foot p { margin: 6px 0; }
+</style>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <button class="btn btn-ghost btn-sm icon-btn" id="toc-btn" type="button" aria-controls="toc" aria-expanded="false">目录</button>
+    <a class="brand" href="#top" aria-label="MATLAB 实验台，回到顶部">
+      <span class="brand-mark" aria-hidden="true">&gt;&gt;</span>
+      <span class="brand-name">MATLAB 实验台</span>
+    </a>
+    <span class="top-spacer"></span>
+    <div class="prog" title="进度只保存在你这台设备的浏览器里">
+      <span class="prog-bar" id="prog-meter"><i></i></span>
+      <span id="prog-text"><span class="pt-long">已学完 </span>0 / 10<span class="pt-long"> 章</span></span>
+    </div>
+    <button class="btn btn-console btn-sm" type="button" data-open-console aria-controls="console" aria-expanded="false">&gt;&gt; <span class="lbl-long">命令行</span></button>
+  </div>
+</header>
+
+<div class="layout" id="top">
+  <nav class="toc" id="toc" aria-label="章节目录">
+    <div class="toc-head">章节</div>
+    <ol id="toc-list"></ol>
+    <p class="toc-foot">打勾表示你标记过“已学完”。按 <kbd>Ctrl</kbd> + <kbd>`</kbd> 随时打开命令行窗口。</p>
+  </nav>
+
+  <main class="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">MATRIX LABORATORY · 在浏览器里动手学</p>
+      <h1 id="hero-title"><span class="prompt-glyph" aria-hidden="true">&gt;&gt;</span>MATLAB 实验台</h1>
+      <p class="lede">一份边写边跑的 MATLAB 教程。从矩阵、索引讲到信号与系统和数学建模，页面里每一段代码都可以直接修改、运行、出图，不用安装任何软件。</p>
+      <ul class="stats">
+        <li><b>10</b>章教程</li>
+        <li><b id="stat-cells">64</b>段可运行示例</li>
+        <li><b id="stat-funcs">438</b>个内置函数</li>
+        <li><b>30</b>道测验题</li>
+      </ul>
+      <div class="cell" data-run="now" data-label="试一试 · 改一下 2*pi 里的频率，再按运行">
+<textarea>t = 0:0.01:4;                     % 时间轴：0 到 4 秒，步长 0.01
+y = exp(-t) .* sin(2*pi*t);       % 衰减正弦信号
+plot(t, y, 'LineWidth', 1.5); grid on
+title('y(t) = e^{-t} sin(2\pi t)')
+xlabel('t (s)'); ylabel('y')
+peak = max(y)</textarea>
+      </div>
+      <ul class="howto">
+        <li><b>改完就跑</b>点「运行」或按 <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>Enter</kbd>。每个代码单元独立运行，互不影响。</li>
+        <li><b>报错有中文解释</b>错误信息保持 MATLAB 原文，下方附上原因和改法，方便你在真 MATLAB 里对照。</li>
+        <li><b>命令行窗口</b>右上角的 <code>&gt;&gt;</code> 打开命令行，变量会一直留在工作区里，适合自由试验。</li>
+      </ul>
+    </section>
+
+<!-- ============================ 第 1 章 ============================ -->
+<section class="chapter" id="ch-start" data-ch data-num="01" data-title="认识 MATLAB">
+  <div class="ch-top"><span class="ch-num">第 1 章</span><span class="ch-meta">约 15 分钟</span></div>
+  <h2>认识 MATLAB：命令行与变量</h2>
+  <hr class="ch-rule">
+  <p>MATLAB 的名字来自 <b>MAT</b>rix <b>LAB</b>oratory，也就是“矩阵实验室”。在 MATLAB 里，一个数是 1×1 的矩阵，一段文字是 1×n 的字符矩阵，整个语言都是围绕矩阵设计的。记住这一点，后面很多规则都会显得很自然。</p>
+  <ul class="learn"><li>认识 MATLAB 桌面的四个区域</li><li>变量赋值与分号</li><li>ans、pi、Inf、NaN</li><li>浮点数比较的坑</li></ul>
+
+  <h3><span class="sec">1.1</span>MATLAB 桌面</h3>
+  <p>打开 MATLAB 后，你会看到下面几个区域。本站的代码单元相当于“实时脚本”，右上角的 <code>&gt;&gt;</code> 按钮打开的就是命令行窗口加工作区。</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>区域</th><th>作用</th><th>本站对应</th></tr></thead>
+    <tbody>
+      <tr><td>命令行窗口 Command Window</td><td>输入一行命令，回车立即执行，适合试验</td><td>底部命令行窗口</td></tr>
+      <tr><td>编辑器 Editor</td><td>编写、保存 .m 脚本和函数文件</td><td>各个代码单元</td></tr>
+      <tr><td>工作区 Workspace</td><td>列出当前所有变量的名称、值、尺寸</td><td>命令行窗口右侧</td></tr>
+      <tr><td>当前文件夹 Current Folder</td><td>MATLAB 只能直接运行当前文件夹（或路径中）的文件</td><td>浏览器里没有文件系统，不适用</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="sec">1.2</span>变量与赋值</h3>
+  <p>用 <code>=</code> 给变量赋值。变量不用提前声明类型，第一次赋值时自动创建。语句末尾加分号 <code>;</code> 只是<b>不显示结果</b>，赋值照样完成。</p>
+  <div class="cell" data-label="示例 1.1 · 赋值与分号">
+<textarea>a = 10
+b = 3;          % 有分号：赋值了，但不显示
+c = a / b
+d = a^2 + b^2
+3 * 7           % 没写变量名，结果存进 ans
+ans + 1</textarea>
+  </div>
+  <p>变量名必须以字母开头，后面可以跟字母、数字和下划线，并且<b>区分大小写</b>：<code>A</code> 和 <code>a</code> 是两个不同的变量。不要用 <code>sum</code>、<code>max</code>、<code>i</code> 这类内置函数名当变量名，否则同名函数在当前工作区里就用不了了。</p>
+
+  <h3><span class="sec">1.3</span>内置常量与特殊值</h3>
+  <div class="cell" data-label="示例 1.2 · 常量与特殊值">
+<textarea>pi
+exp(1)          % MATLAB 没有内置的 e，用 exp(1)
+1/0             % 正无穷 Inf
+0/0             % 非数 NaN（Not a Number）
+sqrt(-1)        % 虚数单位，也可以直接写 1i
+eps             % 1 和下一个双精度数之间的距离</textarea>
+  </div>
+
+  <h3><span class="sec">1.4</span>显示格式与浮点误差</h3>
+  <p>默认的 <code>format short</code> 只显示 4 位小数，但变量内部始终是双精度（约 16 位有效数字）。显示的是近似值，不代表计算被截断了。</p>
+  <div class="cell" data-label="示例 1.3 · format 与浮点数比较">
+<textarea>format long
+pi
+format short
+pi
+x = 0.1 + 0.2;
+x == 0.3                  % 结果是 0（假）
+abs(x - 0.3) < 1e-10      % 正确的比较方式：看差值是否足够小</textarea>
+  </div>
+  <div class="note trap"><span class="note-tag">易错</span><p>0.1 和 0.2 在二进制里都无法精确表示，所以 <code>0.1 + 0.2 == 0.3</code> 不成立。比较两个计算出来的小数时，永远用 <code>abs(a - b) &lt; tol</code>。这在数模里判断“是否收敛”时尤其常见。</p></div>
+
+  <h3><span class="sec">1.5</span>常用命令</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>命令</th><th>作用</th></tr></thead>
+    <tbody>
+      <tr><td><code>clc</code></td><td>清空命令行窗口（变量还在）</td></tr>
+      <tr><td><code>clear</code> / <code>clear x</code></td><td>删除全部变量 / 只删除 x</td></tr>
+      <tr><td><code>close all</code></td><td>关闭所有图窗</td></tr>
+      <tr><td><code>who</code> / <code>whos</code></td><td>列出变量名 / 变量的尺寸和类型</td></tr>
+      <tr><td><code>help sin</code> / <code>doc sin</code></td><td>查看函数说明 / 打开完整文档</td></tr>
+      <tr><td>↑ 方向键</td><td>在命令行窗口里调出上一条命令</td></tr>
+    </tbody>
+  </table></div>
+  <p>很多人的脚本第一行都是 <code>clear; clc; close all;</code>，保证每次运行都从干净的状态开始。</p>
+  <div class="cell" data-label="示例 1.4 · whos 查看变量">
+<textarea>x = 1:5;
+name = 'signal';
+A = magic(3);
+z = 3 + 4i;
+whos</textarea>
+  </div>
+  <div class="note py"><span class="note-tag">Python 对照</span><p>乘方是 <code>^</code> 而不是 <code>**</code>；注释用 <code>%</code> 而不是 <code>#</code>；不等号是 <code>~=</code> 而不是 <code>!=</code>；显示用 <code>disp</code>。最大的区别是下标从 <b>1</b> 开始，第 3 章会细讲。</p></div>
+
+  <div class="quiz" data-quiz="ch-start"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-start" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-matrix">下一章：矩阵 →</a></div>
+</section>
+
+<!-- ============================ 第 2 章 ============================ -->
+<section class="chapter" id="ch-matrix" data-ch data-num="02" data-title="矩阵">
+  <div class="ch-top"><span class="ch-num">第 2 章</span><span class="ch-meta">约 20 分钟</span></div>
+  <h2>矩阵：MATLAB 的基本单位</h2>
+  <hr class="ch-rule">
+  <ul class="learn"><li>方括号构造矩阵</li><li>冒号与 linspace</li><li>zeros / ones / eye / rand</li><li>size 与 numel</li><li>拼接与 reshape</li></ul>
+
+  <h3><span class="sec">2.1</span>用方括号构造</h3>
+  <p>方括号里，<b>空格或逗号</b>分隔同一行的元素，<b>分号或换行</b>开始新的一行。单引号 <code>'</code> 是转置。</p>
+  <div class="cell" data-label="示例 2.1 · 行向量、列向量、矩阵">
+<textarea>r = [1 2 3]          % 1×3 行向量
+c = [1; 2; 3]        % 3×1 列向量
+A = [1 2 3
+     4 5 6]          % 换行也能分行
+At = A'              % 转置：2×3 变成 3×2</textarea>
+  </div>
+  <div class="note trap"><span class="note-tag">易错</span><p><code>[1 -2]</code> 是两个元素 1 和 −2，而 <code>[1 - 2]</code> 是一个元素 −1。方括号里减号两边的空格会改变含义，写的时候保持“要么都有空格，要么都没有”。</p></div>
+
+  <h3><span class="sec">2.2</span>冒号运算与 linspace</h3>
+  <p><code>a:step:b</code> 从 a 开始、按步长 step 递增，不超过 b；省略 step 时步长为 1。<code>linspace(a, b, n)</code> 则在 a 和 b 之间均匀取 n 个点，<b>两端都包含</b>。画图时常用 linspace，循环计数时常用冒号。</p>
+  <div class="cell" data-label="示例 2.2 · 冒号与 linspace">
+<textarea>v1 = 1:5
+v2 = 0:0.25:1
+v3 = 10:-3:1          % 步长可以为负
+v4 = linspace(0, 1, 5)
+numel(0:0.001:1)      % 采样点数：1001 个</textarea>
+  </div>
+
+  <h3><span class="sec">2.3</span>特殊矩阵</h3>
+  <div class="cell" data-label="示例 2.3 · 常用矩阵生成函数">
+<textarea>Z = zeros(2, 3)
+O = ones(2)           % 只给一个参数时是方阵
+I = eye(3)
+M = magic(3)          % 每行、每列、对角线之和都等于 15
+rng(42);              % 固定随机数种子，结果可重复
+R = rand(2, 3)        % [0,1) 均匀分布
+N = randi([1 6], 1, 8)   % 掷 8 次骰子</textarea>
+  </div>
+  <div class="note tip"><span class="note-tag">说明</span><p>实验台的随机数生成算法和 MATLAB 不同，同样的 <code>rng(42)</code> 得到的数字也不一样。真 MATLAB 里 <code>rng</code> 同样保证可重复，这一点在数模论文里很重要：审稿人要能复现你的结果。</p></div>
+
+  <h3><span class="sec">2.4</span>查看尺寸</h3>
+  <div class="cell" data-label="示例 2.4 · size / numel / length">
+<textarea>A = zeros(3, 5);
+size(A)
+[m, n] = size(A)      % 分别取出行数和列数
+numel(A)              % 元素总数
+length(A)             % 最长那一维的长度，矩阵上容易误用</textarea>
+  </div>
+
+  <h3><span class="sec">2.5</span>拼接与变形</h3>
+  <p>方括号也是拼接运算符：<code>[A, B]</code> 横向拼接要求行数相同，<code>[A; B]</code> 纵向拼接要求列数相同。<code>reshape</code> 按“列优先”的顺序重新排列元素。</p>
+  <div class="cell" data-label="示例 2.5 · 拼接、reshape、repmat">
+<textarea>A = [1 2; 3 4];
+B = [5 6; 7 8];
+H = [A, B]
+V = [A; B]
+x = reshape(1:6, 2, 3)     % 1~6 按列填进 2×3
+T = repmat([1 0], 2, 3)    % 把 [1 0] 复制成 2 行 3 列的块</textarea>
+  </div>
+
+  <div class="challenge" data-check="mat-ij" data-hint="方法一：两层 for 循环，M(i, j) = 10*i + j。方法二：(1:4)' 是列向量，(1:4) 是行向量，(1:4)'*10 + (1:4) 会自动扩展成 4×4。">
+    <div class="task"><p>构造一个 4×4 矩阵 <code>M</code>，让第 i 行第 j 列的元素等于 <code>10*i + j</code>。也就是说 <code>M(2, 3)</code> 应该是 23。</p></div>
+<textarea>M = zeros(4);
+% 在下面补全代码，让 M(i, j) = 10*i + j
+
+M</textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-matrix"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-matrix" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-index">下一章：索引 →</a></div>
+</section>
+
+<!-- ============================ 第 3 章 ============================ -->
+<section class="chapter" id="ch-index" data-ch data-num="03" data-title="索引">
+  <div class="ch-top"><span class="ch-num">第 3 章</span><span class="ch-meta">约 25 分钟</span></div>
+  <h2>索引：取出你要的元素</h2>
+  <hr class="ch-rule">
+  <p>索引是 MATLAB 里最常用、也最容易出错的操作。把这一章练熟，后面处理数据会轻松很多。</p>
+  <ul class="learn"><li>下标从 1 开始，end 表示最后一个</li><li>矩阵的 (行, 列) 索引</li><li>列优先的线性索引</li><li>逻辑索引与 find</li><li>增删元素</li></ul>
+
+  <h3><span class="sec">3.1</span>向量索引</h3>
+  <div class="cell" data-label="示例 3.1 · 圆括号取元素">
+<textarea>v = [10 20 30 40 50];
+v(1)          % 第一个元素，下标从 1 开始
+v(end)        % 最后一个
+v(end-1)      % 倒数第二个
+v([1 3 5])    % 用向量一次取多个
+v(2:4)
+v(end:-1:1)   % 倒序</textarea>
+  </div>
+
+  <h3><span class="sec">3.2</span>矩阵索引：先行后列</h3>
+  <p><code>A(i, j)</code> 取第 i 行第 j 列。单独一个冒号 <code>:</code> 表示“这一维全部要”。</p>
+  <div class="cell" data-label="示例 3.2 · 取行、取列、取子矩阵">
+<textarea>A = magic(4)
+A(2, 3)          % 第 2 行第 3 列
+A(2, :)          % 整个第 2 行
+A(:, 1)          % 整个第 1 列
+A(1:2, 3:4)      % 左上角往右的 2×2 子块
+A(end, end)</textarea>
+  </div>
+
+  <h3><span class="sec">3.3</span>线性索引：列优先</h3>
+  <p>只给一个下标时，MATLAB 把矩阵看成按<b>列</b>依次排成的长向量。<code>A(:)</code> 会把矩阵拉直成一列。</p>
+  <div class="lin-demo">
+    <div class="lin-grid" role="img" aria-label="magic(3) 各元素的线性下标：第一列 8、3、4 对应下标 1、2、3，第二列 1、5、9 对应 4、5、6，第三列 6、7、2 对应 7、8、9">
+      <span class="c1">8<sub>1</sub></span><span>1<sub>4</sub></span><span>6<sub>7</sub></span>
+      <span class="c1">3<sub>2</sub></span><span>5<sub>5</sub></span><span>7<sub>8</sub></span>
+      <span class="c1">4<sub>3</sub></span><span>9<sub>6</sub></span><span>2<sub>9</sub></span>
+    </div>
+    <p class="lin-cap">magic(3) 的元素和它的线性下标（右下角小字）。先走完第 1 列，再到第 2 列，所以 <code>A(4)</code> 是 1，不是 3。</p>
+  </div>
+  <div class="cell" data-label="示例 3.3 · 线性索引">
+<textarea>A = magic(3);
+A(4)
+A(:)'            % 拉直后转置成行，方便看
+A([1 5 9])       % 主对角线的三个元素</textarea>
+  </div>
+
+  <h3><span class="sec">3.4</span>逻辑索引</h3>
+  <p>比较运算得到一个和原数组同样大小的 0/1 逻辑数组。把它放进圆括号，就能挑出所有满足条件的元素。这是 MATLAB 处理数据最有力的工具之一。</p>
+  <div class="cell" data-label="示例 3.4 · 用条件筛选数据">
+<textarea>x = [3 -1 4 -1 5 -9 2 6];
+mask = x > 0          % 逻辑数组
+x(mask)               % 只留下正数
+x(x < 0) = 0          % 把负数全部改成 0
+sum(x > 2)            % 统计大于 2 的个数（true 当作 1 相加）
+y = x(x > 1 & x < 6)  % 多个条件用 & 和 | 连接</textarea>
+  </div>
+
+  <h3><span class="sec">3.5</span>find：找下标</h3>
+  <div class="cell" data-label="示例 3.5 · find">
+<textarea>x = [0 7 0 3 9 0];
+idx = find(x)            % 非零元素的位置
+first = find(x > 5, 1)   % 第一个大于 5 的位置
+[r, c] = find(magic(3) > 6)   % 矩阵中满足条件的行号和列号</textarea>
+  </div>
+
+  <h3><span class="sec">3.6</span>修改、扩展与删除</h3>
+  <div class="cell" data-label="示例 3.6 · 赋值会自动扩容，赋 [] 表示删除">
+<textarea>v = 1:5;
+v(2) = 100
+v(8) = 8          % 超出长度会自动补 0
+v(3) = []         % 删除第 3 个元素
+A = magic(3);
+A(:, 2) = []      % 删除第 2 列
+B = [];
+for k = 1:4
+    B(end+1) = k^2;   % 在末尾追加
+end
+B</textarea>
+  </div>
+  <div class="cell" data-label="示例 3.7 · 故意出错：下标 0">
+<textarea>x = [1 2 3];
+x(0)</textarea>
+  </div>
+  <div class="note py"><span class="note-tag">Python 对照</span><p>MATLAB 的 <code>v(2:4)</code> 包含第 4 个元素（Python 的 <code>v[1:4]</code> 不含右端）；MATLAB 没有负数下标，倒数第一个写 <code>v(end)</code>；取元素用圆括号，不是方括号。</p></div>
+
+  <div class="challenge" data-check="scores" data-hint="scores >= 60 得到逻辑数组，用它当下标就能取出及格成绩；sum(scores < 60) 可以直接数出不及格人数。">
+    <div class="task"><p>一组成绩 <code>scores = [88 92 75 60 95 58 81 45]</code>。把及格（≥ 60）的成绩按原顺序存进 <code>pass</code>，把不及格的人数存进 <code>nfail</code>。</p></div>
+<textarea>scores = [88 92 75 60 95 58 81 45];
+pass =
+nfail = </textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-index"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-index" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-ops">下一章：运算 →</a></div>
+</section>
+
+<!-- ============================ 第 4 章 ============================ -->
+<section class="chapter" id="ch-ops" data-ch data-num="04" data-title="运算">
+  <div class="ch-top"><span class="ch-num">第 4 章</span><span class="ch-meta">约 25 分钟</span></div>
+  <h2>运算：矩阵运算与逐元素运算</h2>
+  <hr class="ch-rule">
+  <ul class="learn"><li>* 与 .* 的区别</li><li>隐式扩展</li><li>用 A\b 解方程组</li><li>特征值与行列式</li><li>按行或按列统计</li></ul>
+
+  <h3><span class="sec">4.1</span>带点和不带点</h3>
+  <p>MATLAB 默认按<b>线性代数</b>的规则做乘、除、乘方。想让对应位置的元素逐个运算，就在运算符前加一个点。</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>矩阵运算</th><th>含义</th><th>逐元素运算</th><th>含义</th></tr></thead>
+    <tbody>
+      <tr><td><code>A * B</code></td><td>矩阵乘法，A 的列数 = B 的行数</td><td><code>A .* B</code></td><td>对应元素相乘</td></tr>
+      <tr><td><code>A / B</code></td><td>右除，解 xB = A</td><td><code>A ./ B</code></td><td>对应元素相除</td></tr>
+      <tr><td><code>A \ b</code></td><td>左除，解 Ax = b</td><td><code>A .\ B</code></td><td>B 的元素除以 A 的元素</td></tr>
+      <tr><td><code>A ^ 2</code></td><td>A*A，要求方阵</td><td><code>A .^ 2</code></td><td>每个元素平方</td></tr>
+      <tr><td><code>A'</code></td><td>共轭转置</td><td><code>A.'</code></td><td>普通转置（复数时有区别）</td></tr>
+    </tbody>
+  </table></div>
+  <p>加减法本来就是逐元素的，不需要点。</p>
+  <div class="cell" data-label="示例 4.1 · 逐元素运算">
+<textarea>a = [1 2 3];
+b = [4 5 6];
+a .* b
+a ./ b
+a .^ 2
+a * b'        % 行 × 列 = 内积，1×1
+a' * b        % 列 × 行 = 外积，3×3</textarea>
+  </div>
+  <div class="cell" data-label="示例 4.2 · 故意出错：把 .* 写成 *">
+<textarea>a = [1 2 3];
+b = [4 5 6];
+a * b</textarea>
+  </div>
+  <div class="note trap"><span class="note-tag">易错</span><p>写信号表达式时最容易犯这个错：<code>exp(-t) * sin(t)</code> 在 t 是向量时会报错，要写 <code>exp(-t) .* sin(t)</code>。同理 <code>t^2</code> 要写成 <code>t.^2</code>，<code>1/t</code> 要写成 <code>1./t</code>。</p></div>
+
+  <h3><span class="sec">4.2</span>隐式扩展</h3>
+  <p>从 R2016b 开始，尺寸不同的数组做逐元素运算时，如果某一维长度为 1，就会自动沿这一维复制。用它可以一行完成“每列减去该列均值”这类操作。</p>
+  <div class="cell" data-label="示例 4.3 · 自动扩展">
+<textarea>A = [1 2 3; 4 5 6];
+A - mean(A)          % 每一列减去该列的均值
+[1 2 3] + [10; 20]   % 1×3 和 2×1 扩展成 2×3</textarea>
+  </div>
+
+  <h3><span class="sec">4.3</span>解线性方程组：节点电压法</h3>
+  <p>电路分析中，用节点电压法列出的方程就是 <b>G</b>·<b>V</b> = <b>I</b>。下面是一个三节点电阻网络的电导矩阵（单位 S）和注入电流（单位 A）。用左除 <code>\</code> 直接求出各节点电压。</p>
+  <div class="cell" data-label="示例 4.4 · G\I 求节点电压">
+<textarea>G = [ 1.5  -0.5   0
+      -0.5   1.25 -0.25
+       0    -0.25  0.75];      % 电导矩阵
+I = [1; 0; 0.5];               % 节点注入电流（列向量）
+V = G \ I                      % 节点电压
+residual = norm(G*V - I)       % 检验：残差应接近 0</textarea>
+  </div>
+  <div class="note tip"><span class="note-tag">说明</span><p><code>inv(G)*I</code> 也能得到同样的结果，但 <code>G\I</code> 直接做高斯消元，更快也更准。MATLAB 官方文档的建议是：除非你真的需要逆矩阵本身，否则不要用 inv 解方程。</p></div>
+
+  <h3><span class="sec">4.4</span>线性代数常用函数</h3>
+  <div class="cell" data-label="示例 4.5 · det / rank / eig">
+<textarea>A = [4 1; 2 3];
+det(A)
+rank(A)
+lambda = eig(A)          % 特征值
+[V, D] = eig(A)          % A*V = V*D，D 是特征值对角阵
+A*V - V*D                % 检验，应该全是 0</textarea>
+  </div>
+
+  <h3><span class="sec">4.5</span>统计函数与维度参数</h3>
+  <p><code>sum</code>、<code>mean</code>、<code>max</code> 等函数作用在矩阵上时，默认<b>按列</b>计算；第二个参数写 2 表示按行。</p>
+  <div class="cell" data-label="示例 4.6 · 按列与按行">
+<textarea>% 3 名同学（行）× 3 门课（列）
+scores = [85 92 78
+          90 88 95
+          70 65 80];
+avgCourse = mean(scores)          % 每门课的平均分（按列）
+avgStudent = mean(scores, 2)      % 每个人的平均分（按行）
+best = max(scores, [], 2)         % 每个人的最高分
+[m, idx] = max(scores(:))         % 全表最高分及其线性下标
+[r, c] = ind2sub(size(scores), idx)</textarea>
+  </div>
+
+  <div class="challenge" data-check="linsys" data-hint="把三个方程的系数按行写成 3×3 矩阵 A，右边写成列向量 b = [8; -11; -3]，然后 x = A \ b。">
+    <div class="task"><p>解下面的线性方程组，把结果存为列向量 <code>x</code>（x(1)、x(2)、x(3) 分别对应 x、y、z）：</p>
+      <p><code>2x + y − z = 8</code>，<code>−3x − y + 2z = −11</code>，<code>−2x + y + 2z = −3</code></p></div>
+<textarea>A =
+b =
+x = </textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-ops"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-ops" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-flow">下一章：流程控制 →</a></div>
+</section>
+
+<!-- ============================ 第 5 章 ============================ -->
+<section class="chapter" id="ch-flow" data-ch data-num="05" data-title="流程控制">
+  <div class="ch-top"><span class="ch-num">第 5 章</span><span class="ch-meta">约 25 分钟</span></div>
+  <h2>流程控制与向量化</h2>
+  <hr class="ch-rule">
+  <ul class="learn"><li>if / elseif / else</li><li>for 与 while</li><li>switch</li><li>break 与 continue</li><li>向量化与预分配</li></ul>
+  <p>MATLAB 的每个控制结构都以 <code>end</code> 结束，不靠缩进来划分代码块。不过缩进依然很重要，它让人一眼看出结构。</p>
+
+  <h3><span class="sec">5.1</span>条件判断</h3>
+  <div class="cell" data-label="示例 5.1 · if / elseif / else">
+<textarea>score = 83;
+if score >= 90
+    grade = 'A';
+elseif score >= 80
+    grade = 'B';
+elseif score >= 60
+    grade = 'C';
+else
+    grade = 'D';
+end
+fprintf('%d 分对应等级 %s\n', score, grade);</textarea>
+  </div>
+  <p>比较运算符：<code>==</code>、<code>~=</code>（不等于）、<code>&lt;</code>、<code>&lt;=</code>、<code>&gt;</code>、<code>&gt;=</code>。逻辑运算：<code>&amp;&amp;</code>（且）、<code>||</code>（或）、<code>~</code>（非）。<code>&amp;&amp;</code> 和 <code>||</code> 只能用于标量条件，并且会“短路”：左边已经能决定结果时，右边不再计算。</p>
+
+  <h3><span class="sec">5.2</span>for 循环</h3>
+  <p><code>for</code> 后面的变量会依次取右边数组的每一<b>列</b>。最常见的形式是 <code>for k = 1:n</code>。</p>
+  <div class="cell" data-label="示例 5.2 · for 循环">
+<textarea>s = 0;
+for k = 1:2:99        % 1, 3, 5, …, 99
+    s = s + k;
+end
+s
+for v = [3 7 1]       % 也可以直接遍历一个向量
+    fprintf('v = %d\n', v);
+end</textarea>
+  </div>
+
+  <h3><span class="sec">5.3</span>while 循环</h3>
+  <div class="cell" data-label="示例 5.3 · 找出第一个使 n! 超过一百万的 n">
+<textarea>n = 1;
+f = 1;
+while f <= 1e6
+    n = n + 1;
+    f = f * n;
+end
+fprintf('%d! = %d\n', n, f);</textarea>
+  </div>
+
+  <h3><span class="sec">5.4</span>switch</h3>
+  <div class="cell" data-label="示例 5.4 · switch 分支">
+<textarea>method = 'spline';
+switch method
+    case 'linear'
+        disp('线性插值');
+    case {'spline', 'pchip'}      % 一个 case 匹配多个值
+        disp('三次插值');
+    otherwise
+        disp('未知方法');
+end</textarea>
+  </div>
+
+  <h3><span class="sec">5.5</span>break 与 continue</h3>
+  <div class="cell" data-label="示例 5.5 · 找出 100 以后的第一个素数">
+<textarea>for n = 101:200
+    if ~isprime(n)
+        continue          % 不是素数：跳过本次循环的剩余部分
+    end
+    fprintf('第一个大于 100 的素数是 %d\n', n);
+    break                 % 找到了：跳出整个循环
+end</textarea>
+  </div>
+
+  <h3><span class="sec">5.6</span>向量化与预分配</h3>
+  <p>“向量化”指用数组运算代替显式循环。代码更短，也更接近数学公式。下面用两种方法计算 Σ 1/k²，结果都应该接近 π²/6。</p>
+  <div class="cell" data-label="示例 5.6 · 循环与向量化">
+<textarea>N = 200000;
+tic
+s1 = 0;
+for k = 1:N
+    s1 = s1 + 1/k^2;
+end
+t1 = toc;
+tic
+s2 = sum(1 ./ (1:N).^2);
+t2 = toc;
+fprintf('for 循环：%.8f，用时 %.4f s\n', s1, t1);
+fprintf('向量化  ：%.8f，用时 %.4f s\n', s2, t2);
+fprintf('pi^2/6  ：%.8f\n', pi^2/6);</textarea>
+  </div>
+  <div class="note tip"><span class="note-tag">说明</span><p>这里的用时来自浏览器里的实验台，在真 MATLAB 中两者都会快得多，差距也会变小，因为 MATLAB 会对循环做即时编译。不过向量化的写法依然更简洁，也更常见。</p></div>
+  <p>非用循环不可时，先用 <code>zeros</code> 把数组按最终大小分配好，再在循环里填值。每次都靠 <code>x(end+1) = …</code> 扩容，数组大了以后会明显变慢，MATLAB 编辑器也会在这种代码下面画波浪线提醒你。</p>
+  <div class="cell" data-label="示例 5.7 · 预分配">
+<textarea>n = 10;
+x = zeros(1, n);      % 先分配好
+x(1) = 1;
+for k = 2:n
+    x(k) = 0.5 * x(k-1) + 1;    % 迭代 x(k) = 0.5 x(k-1) + 1
+end
+x</textarea>
+  </div>
+
+  <div class="challenge" data-check="fib" data-hint="F = zeros(1, 20); F(1) = 1; F(2) = 1; 然后 for k = 3:20, F(k) = F(k-1) + F(k-2); end">
+    <div class="task"><p>把斐波那契数列的前 20 项存进行向量 <code>F</code>，其中 <code>F(1) = F(2) = 1</code>，之后每一项等于前两项之和。</p></div>
+<textarea>F = zeros(1, 20);
+% 在这里写循环
+
+F</textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-flow"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-flow" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-func">下一章：函数 →</a></div>
+</section>
+
+<!-- ============================ 第 6 章 ============================ -->
+<section class="chapter" id="ch-func" data-ch data-num="06" data-title="函数">
+  <div class="ch-top"><span class="ch-num">第 6 章</span><span class="ch-meta">约 25 分钟</span></div>
+  <h2>函数与函数句柄</h2>
+  <hr class="ch-rule">
+  <ul class="learn"><li>脚本与函数的区别</li><li>多个输入输出</li><li>nargin 设置默认参数</li><li>匿名函数</li><li>把函数传给 fzero、integral</li></ul>
+
+  <h3><span class="sec">6.1</span>脚本与函数</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th></th><th>脚本</th><th>函数</th></tr></thead>
+    <tbody>
+      <tr><td>第一行</td><td>直接是代码</td><td><code>function [输出] = 名字(输入)</code></td></tr>
+      <tr><td>变量</td><td>共用基础工作区，运行完变量都留着</td><td>有独立的工作区，只通过输入输出交换数据</td></tr>
+      <tr><td>文件名</td><td>任意</td><td>必须和函数名相同，如 stats.m</td></tr>
+      <tr><td>适合</td><td>一次性的分析流程</td><td>会被反复调用的计算</td></tr>
+    </tbody>
+  </table></div>
+  <p>从 R2016b 开始，脚本末尾可以直接写局部函数，这样一个文件就能装下完整的作业或实验代码。实验台的代码单元也支持这种写法。</p>
+
+  <h3><span class="sec">6.2</span>定义函数</h3>
+  <div class="cell" data-label="示例 6.1 · 两个输出的函数（写在脚本末尾）">
+<textarea>data = [2 4 4 4 5 5 7 9];
+[m, s] = mystats(data)
+r = mystats(data)          % 只接一个输出时，得到第一个
+
+function [mu, sigma] = mystats(x)
+    % MYSTATS 返回均值和样本标准差
+    n = numel(x);
+    mu = sum(x) / n;
+    sigma = sqrt(sum((x - mu).^2) / (n - 1));
+end</textarea>
+  </div>
+  <div class="cell" data-label="示例 6.2 · 用 nargin 给参数设默认值">
+<textarea>a1 = circleArea(2)
+a2 = circleArea(2, 3.14)
+
+function A = circleArea(r, p)
+    if nargin < 2       % 调用时没给 p
+        p = pi;
+    end
+    A = p * r^2;
+end</textarea>
+  </div>
+
+  <h3><span class="sec">6.3</span>匿名函数</h3>
+  <p>只有一个表达式的小函数，用 <code>@(参数) 表达式</code> 一行定义，不需要单独的文件。</p>
+  <div class="cell" data-label="示例 6.3 · 匿名函数">
+<textarea>f = @(x) x.^2 - 3*x + 2;
+f(0)
+f([1 2 3])                 % 用了 .^，可以直接传入向量
+g = @(x, y) sqrt(x.^2 + y.^2);
+g(3, 4)
+a = 2;
+h = @(x) a * x;            % 创建时“拍下” a 的值
+a = 100;
+h(1)                       % 仍然是 2</textarea>
+  </div>
+
+  <h3><span class="sec">6.4</span>把函数当参数传递</h3>
+  <p>很多数值函数的第一个参数都是函数句柄：求根 <code>fzero</code>、积分 <code>integral</code>、画图 <code>fplot</code>、解微分方程 <code>ode45</code>。写成匿名函数直接传进去最方便。</p>
+  <div class="cell" data-label="示例 6.4 · fzero、integral、fplot">
+<textarea>f = @(x) exp(-x) - x;
+r = fzero(f, 0.5)                     % 求 e^(-x) = x 的根
+I = integral(@(x) exp(-x.^2), 0, 1)   % 被积函数必须支持向量输入
+fplot(f, [0 2]); grid on
+yline(0, '--'); xline(r, ':', '根')
+title('f(x) = e^{-x} - x')</textarea>
+  </div>
+  <div class="cell" data-label="示例 6.5 · arrayfun：对每个元素调用函数">
+<textarea>n = 1:6;
+sq = arrayfun(@(k) sum(1:k), n)          % 1, 1+2, 1+2+3, …
+c = arrayfun(@(k) ones(1, k), 1:3, 'UniformOutput', false)</textarea>
+  </div>
+
+  <div class="challenge" data-check="anon" data-hint="f = @(x) x.^2 - 2*x + 1;  注意用 .^ 而不是 ^。">
+    <div class="task"><p>写一个匿名函数 <code>f</code>，计算 f(x) = x² − 2x + 1，并且能接受向量输入：<code>f([0 1 2 3])</code> 应该得到 <code>[1 0 1 4]</code>。</p></div>
+<textarea>f =
+f([0 1 2 3])</textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-func"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-func" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-plot">下一章：绘图 →</a></div>
+</section>
+
+<!-- ============================ 第 7 章 ============================ -->
+<section class="chapter" id="ch-plot" data-ch data-num="07" data-title="绘图">
+  <div class="ch-top"><span class="ch-num">第 7 章</span><span class="ch-meta">约 25 分钟</span></div>
+  <h2>绘图：把数据画出来</h2>
+  <hr class="ch-rule">
+  <ul class="learn"><li>plot 与线型字符串</li><li>hold on 与图例</li><li>subplot</li><li>stem、bar、histogram</li><li>对数坐标</li><li>报告出图规范</li></ul>
+
+  <h3><span class="sec">7.1</span>plot 的基本用法</h3>
+  <div class="cell" data-label="示例 7.1 · 一条曲线">
+<textarea>x = linspace(0, 2*pi, 200);
+y = sin(x);
+plot(x, y)
+xlabel('x (rad)'); ylabel('sin x'); title('正弦曲线')</textarea>
+  </div>
+
+  <h3><span class="sec">7.2</span>颜色、线型、标记</h3>
+  <p><code>plot</code> 的第三个参数是线型字符串，可以把颜色、线型、标记组合在一起，比如 <code>'r--o'</code>。更细的设置用“属性名, 值”对，比如 <code>'LineWidth', 1.5</code>。</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>颜色</th><th>线型</th><th>标记</th></tr></thead>
+    <tbody>
+      <tr><td><code>r</code> 红 <code>g</code> 绿 <code>b</code> 蓝 <code>k</code> 黑</td><td><code>-</code> 实线（默认）</td><td><code>o</code> 圆 <code>s</code> 方块 <code>d</code> 菱形</td></tr>
+      <tr><td><code>c</code> 青 <code>m</code> 品红 <code>y</code> 黄 <code>w</code> 白</td><td><code>--</code> 虚线 <code>:</code> 点线 <code>-.</code> 点划线</td><td><code>*</code> <code>+</code> <code>x</code> <code>.</code> <code>^</code> <code>v</code> <code>p</code> <code>h</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="cell" data-label="示例 7.2 · 多条曲线与图例">
+<textarea>x = 0:0.5:10;
+plot(x, sqrt(x), 'b-o', 'LineWidth', 1.2); hold on
+plot(x, log(x + 1), 'r--s')
+plot(x, x / 4, 'k:', 'LineWidth', 1.5); hold off
+grid on
+legend('\surd x', 'ln(x+1)', 'x/4', 'Location', 'northwest')
+xlabel('x'); ylabel('y')</textarea>
+  </div>
+  <p>不指定颜色时，MATLAB 会按默认颜色顺序依次给每条线上色：蓝、橙、黄、紫、绿、浅蓝、深红。实验台用的也是这套颜色。</p>
+
+  <h3><span class="sec">7.3</span>子图</h3>
+  <div class="cell" data-label="示例 7.3 · subplot 与四种图">
+<textarea>rng(0);
+subplot(2, 2, 1); plot(1:10, (1:10).^2); title('plot')
+subplot(2, 2, 2); stem(0:8, 0.7.^(0:8), 'filled'); title('stem')
+subplot(2, 2, 3); bar([4 7 3 5]); title('bar')
+subplot(2, 2, 4); histogram(randn(1, 500)); title('histogram')</textarea>
+  </div>
+
+  <h3><span class="sec">7.4</span>对数坐标</h3>
+  <p>数据跨越好几个数量级时，用对数坐标才看得清。比如迭代算法的误差下降、系统的幅频特性。</p>
+  <div class="cell" data-label="示例 7.4 · semilogy：观察误差的指数下降">
+<textarea>k = 0:20;
+err1 = 0.5 .^ k;          % 线性收敛
+err2 = 1 ./ (k + 1).^2;   % 代数收敛
+semilogy(k, err1, 'o-', k, err2, 's-'); grid on
+legend('0.5^k', '1/(k+1)^2'); xlabel('迭代次数 k'); ylabel('误差')</textarea>
+  </div>
+
+  <h3><span class="sec">7.5</span>参考线与文字标注</h3>
+  <div class="cell" data-label="示例 7.5 · xline / yline / text">
+<textarea>t = linspace(0, 10, 400);
+y = 1 - exp(-0.5*t) .* cos(2*t);
+plot(t, y, 'LineWidth', 1.5); grid on
+yline(1, '--', '稳态值');
+[ymax, k] = max(y);
+hold on; plot(t(k), ymax, 'ro'); hold off
+text(t(k) + 0.3, ymax, sprintf('峰值 %.3f', ymax))
+xlabel('t (s)'); ylabel('y(t)'); title('欠阻尼响应')</textarea>
+  </div>
+
+  <div class="note model"><span class="note-tag">报告出图</span>
+    <p>实验报告和数模论文的图，评委第一眼就会看。几个基本要求：</p>
+    <ul>
+      <li>坐标轴标签写清<b>物理量和单位</b>，比如 <code>xlabel('t (s)')</code>；</li>
+      <li>多条曲线一定要有图例，线宽建议 1.5，黑白打印时用线型（实线、虚线）区分，而不只靠颜色；</li>
+      <li>导出用 <code>exportgraphics(gcf, 'fig1.png', 'Resolution', 300)</code>，不要截图。实验台不能保存文件，这一行在这里会被忽略。</li>
+    </ul>
+  </div>
+
+  <div class="challenge" data-check="plot2" data-hint="x = linspace(0, 2*pi, 100); plot(x, sin(x)); hold on; plot(x, cos(x)); legend('sin', 'cos'); title(...); xlabel(...); ylabel(...)">
+    <div class="task"><p>在同一张图里画出 0 到 2π 上的 sin(x) 和 cos(x)，并且加上图例、标题和两个坐标轴标签。</p></div>
+<textarea>x = linspace(0, 2*pi, 100);
+% 在这里画图
+</textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-plot"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-plot" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-text">下一章：字符串与输出 →</a></div>
+</section>
+
+<!-- ============================ 第 8 章 ============================ -->
+<section class="chapter" id="ch-text" data-ch data-num="08" data-title="字符串与输出">
+  <div class="ch-top"><span class="ch-num">第 8 章</span><span class="ch-meta">约 20 分钟</span></div>
+  <h2>字符串、格式化输出与数据结构</h2>
+  <hr class="ch-rule">
+  <ul class="learn"><li>char 与 string</li><li>num2str 与拼接</li><li>fprintf 格式符</li><li>打印对齐的表格</li><li>元胞数组与结构体</li></ul>
+
+  <h3><span class="sec">8.1</span>两种文本类型</h3>
+  <div class="cell" data-label="示例 8.1 · 单引号与双引号">
+<textarea>c = 'hello'           % char：1×5 的字符数组
+s = "hello"           % string：1×1 的字符串对象
+size(c)
+size(s)
+c(1)                  % char 可以按下标取字符
+['abc', 'def']        % char 用方括号拼接
+"abc" + "def"         % string 用加号拼接</textarea>
+  </div>
+
+  <h3><span class="sec">8.2</span>数字与文字互转</h3>
+  <div class="cell" data-label="示例 8.2 · num2str、str2double">
+<textarea>r = 2.5;
+msg = ['半径 r = ', num2str(r), ' cm']
+str2double('3.14') * 2
+['x = ', 5]                 % 错误示范：5 被当成字符编码，显示成看不见的字符
+"x = " + 5                  % string 会自动把数字转成文字</textarea>
+  </div>
+
+  <h3><span class="sec">8.3</span>fprintf 与 sprintf</h3>
+  <p><code>fprintf</code> 按格式打印，<code>sprintf</code> 按同样的格式生成字符串。格式串里的 <code>%</code> 开头的部分会依次被后面的参数替换。</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>格式符</th><th>含义</th><th>示例 → 输出</th></tr></thead>
+    <tbody>
+      <tr><td><code>%d</code></td><td>整数</td><td><code>sprintf('%d', 42)</code> → 42</td></tr>
+      <tr><td><code>%f</code> / <code>%.2f</code></td><td>小数 / 保留两位</td><td><code>sprintf('%.2f', pi)</code> → 3.14</td></tr>
+      <tr><td><code>%8.3f</code></td><td>总宽 8，三位小数，右对齐</td><td><code>sprintf('[%8.3f]', pi)</code> → [&nbsp;&nbsp;&nbsp;3.142]</td></tr>
+      <tr><td><code>%e</code> / <code>%g</code></td><td>科学计数 / 自动选紧凑写法</td><td><code>sprintf('%e', 12345)</code> → 1.234500e+04</td></tr>
+      <tr><td><code>%s</code></td><td>文字</td><td><code>sprintf('%s!', 'OK')</code> → OK!</td></tr>
+      <tr><td><code>\n</code> <code>\t</code> <code>%%</code></td><td>换行、制表符、百分号本身</td><td><code>sprintf('%d%%', 95)</code> → 95%</td></tr>
+    </tbody>
+  </table></div>
+  <div class="cell" data-label="示例 8.3 · 格式化输出">
+<textarea>T = 25.678; name = '1 号传感器';
+fprintf('%s 的温度：%.1f °C\n', name, T);
+fprintf('科学计数：%e，紧凑：%g\n', 0.000123, 0.000123);
+fprintf('合格率 %d%%\n', 95);
+s = sprintf('%03d', 7)        % 补零到 3 位，常用于文件编号</textarea>
+  </div>
+
+  <h3><span class="sec">8.4</span>打印对齐的表格</h3>
+  <p>格式串用完后，如果参数还没用完，fprintf 会<b>重复使用</b>格式串。矩阵参数按列取元素，所以把数据按行叠起来再传进去，一次就能打印整张表。</p>
+  <div class="cell" data-label="示例 8.4 · 一次打印整张表">
+<textarea>x = 1:5;
+y = x.^2;
+z = sqrt(x);
+fprintf('%4s %6s %10s\n', 'x', 'x^2', 'sqrt(x)');
+fprintf('%4d %6d %10.4f\n', [x; y; z]);   % 每列是一行输出</textarea>
+  </div>
+
+  <h3><span class="sec">8.5</span>元胞数组与结构体</h3>
+  <p>普通数组要求每个元素类型相同、大小统一。长度不一的文字、混合类型的数据，用<b>元胞数组</b>（花括号）或<b>结构体</b>（点号字段）来存。</p>
+  <div class="cell" data-label="示例 8.5 · 元胞数组">
+<textarea>names = {'张三', '李四', '欧阳明'};
+ages = [20 21 19];
+for k = 1:numel(names)
+    fprintf('%-6s %d 岁\n', names{k}, ages(k));   % {} 取出内容
+end
+c = names(2)        % () 取出的还是元胞
+s = names{2}        % {} 取出的是里面的字符</textarea>
+  </div>
+  <div class="cell" data-label="示例 8.6 · 结构体">
+<textarea>exp1.name = 'RC 低通滤波';
+exp1.R = 1e3;           % 欧姆
+exp1.C = 1e-6;          % 法拉
+exp1.fc = 1 / (2*pi*exp1.R*exp1.C);
+exp1
+fprintf('%s 的截止频率约 %.1f Hz\n', exp1.name, exp1.fc);
+fieldnames(exp1)</textarea>
+  </div>
+
+  <div class="challenge" data-check="sprintf" data-hint="s = sprintf('r = %.2f, A = %.2f', r, pi*r^2);">
+    <div class="task"><p>已知 <code>r = 2.5</code>。用 sprintf 生成字符串 <code>s</code>，内容为 <code>r = 2.50, A = 19.63</code>，其中 A 是圆的面积 πr²，两个数都保留两位小数。</p></div>
+<textarea>r = 2.5;
+s = </textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-text"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-text" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-signal">下一章：信号与系统 →</a></div>
+</section>
+
+<!-- ============================ 第 9 章 ============================ -->
+<section class="chapter" id="ch-signal" data-ch data-num="09" data-title="信号与系统">
+  <div class="ch-top"><span class="ch-num">第 9 章</span><span class="ch-meta">约 40 分钟 · 电子信息专业向</span></div>
+  <h2>信号与系统实战</h2>
+  <hr class="ch-rule">
+  <p>这一章对应信号与系统实验最常见的几类任务：画常用信号、离散序列与卷积、差分方程、频谱分析、连续 LTI 系统的响应和频率特性。最后一节是符号工具箱的写法和参考结果。</p>
+  <ul class="learn"><li>连续信号的数值表示</li><li>stem 画序列</li><li>conv 卷积与时间轴</li><li>filter 解差分方程</li><li>fft 频谱与频率轴</li><li>tf / step / lsim / bode</li></ul>
+
+  <h3><span class="sec">9.1</span>连续信号：用足够密的采样点近似</h3>
+  <p>计算机里没有真正的连续信号。只要时间步长足够小，画出来的折线就和连续曲线看不出区别。<code>heaviside</code> 是单位阶跃 u(t)，注意它在 t = 0 处取 0.5；也可以直接用逻辑表达式 <code>(t &gt;= 0)</code>。</p>
+  <div class="cell" data-label="示例 9.1 · 常用连续信号">
+<textarea>t = -1:0.001:3;
+u = heaviside(t);                       % 单位阶跃 u(t)
+subplot(2, 2, 1); plot(t, u, 'LineWidth', 1.5); ylim([-0.2 1.2]); title('u(t)')
+subplot(2, 2, 2); plot(t, exp(-2*t) .* u, 'LineWidth', 1.5); title('e^{-2t}u(t)')
+subplot(2, 2, 3); plot(t, sin(2*pi*t), 'LineWidth', 1.5); title('sin(2\pi t)')
+subplot(2, 2, 4); plot(t, exp(-t) .* sin(2*pi*t) .* u, 'LineWidth', 1.5); title('e^{-t}sin(2\pi t)u(t)')</textarea>
+  </div>
+
+  <h3><span class="sec">9.2</span>离散序列</h3>
+  <p>离散序列只在整数 n 上有定义，所以用 <code>stem</code> 画。先建一个下标向量 n，再用逻辑表达式写出 δ[n] 和 u[n]。</p>
+  <div class="cell" data-label="示例 9.2 · δ[n]、u[n] 与指数序列">
+<textarea>n = -5:10;
+delta = double(n == 0);        % 单位冲激序列
+u = double(n >= 0);            % 单位阶跃序列
+x = 0.8.^n .* u;               % 0.8^n u[n]
+subplot(3, 1, 1); stem(n, delta, 'filled'); title('\delta[n]')
+subplot(3, 1, 2); stem(n, u, 'filled'); title('u[n]')
+subplot(3, 1, 3); stem(n, x, 'filled'); title('0.8^n u[n]'); xlabel('n')</textarea>
+  </div>
+
+  <h3><span class="sec">9.3</span>卷积：别忘了时间轴</h3>
+  <p><code>conv</code> 只管数值，不知道序列从哪个 n 开始。结果的起点等于两个序列起点之和，终点等于两个终点之和，长度是两者长度之和减 1。</p>
+  <div class="cell" data-label="示例 9.3 · y[n] = x[n] * h[n]">
+<textarea>x = [1 2 1];      nx = 0:2;
+h = [1 1 1 1];    nh = 0:3;
+y = conv(x, h)
+ny = (nx(1) + nh(1)) : (nx(end) + nh(end))
+stem(ny, y, 'filled'); grid on
+xlabel('n'); ylabel('y[n]'); title('线性卷积'); xlim([-1 6])</textarea>
+  </div>
+
+  <h3><span class="sec">9.4</span>差分方程与 filter</h3>
+  <p><code>filter(b, a, x)</code> 求解差分方程 a(1)y[n] + a(2)y[n−1] + … = b(1)x[n] + b(2)x[n−1] + …。输入单位冲激，得到的就是单位冲激响应 h[n]。</p>
+  <div class="cell" data-label="示例 9.4 · y[n] − 0.5y[n−1] = x[n] 的冲激响应">
+<textarea>n = 0:15;
+d = double(n == 0);                  % δ[n]
+h = filter(1, [1 -0.5], d);          % b = 1，a = [1 -0.5]
+stem(n, h, 'filled'); hold on
+plot(n, 0.5.^n, 'r--');              % 理论结果 h[n] = 0.5^n u[n]
+hold off; grid on
+legend('filter 结果', '0.5^n'); xlabel('n'); title('冲激响应 h[n]')
+maxErr = max(abs(h - 0.5.^n))</textarea>
+  </div>
+
+  <h3><span class="sec">9.5</span>频谱分析：fft 与频率轴</h3>
+  <p>对 N 个采样点做 fft，得到 N 个复数。第 k 个点（下标从 1 开始）对应的频率是 <b>(k−1)·fs/N</b>，前一半是 0 到 fs/2 的正频率。幅度要除以 N；画单边谱时，除直流外再乘 2。</p>
+  <div class="cell" data-label="示例 9.5 · 两个正弦的单边幅度谱">
+<textarea>fs = 1000;                     % 采样率 1000 Hz
+t = 0:1/fs:1-1/fs;             % 1 秒，N = 1000 点
+x = sin(2*pi*50*t) + 0.5*sin(2*pi*120*t);
+N = numel(x);
+X = fft(x);
+f = (0:N-1) * fs / N;          % 频率轴
+A = abs(X) / N;
+A(2:end) = 2 * A(2:end);       % 单边谱：直流以外乘 2
+half = 1:N/2;
+plot(f(half), A(half), 'LineWidth', 1.2); grid on
+xlabel('频率 f (Hz)'); ylabel('幅度'); title('单边幅度谱'); xlim([0 200])
+[~, k] = max(A(half));
+fprintf('最大峰在 %g Hz，幅度 %.3f\n', f(k), A(k));</textarea>
+  </div>
+  <div class="note trap"><span class="note-tag">易错</span><p>频谱峰的位置不对，十有八九是频率轴写错了：写成了 <code>(1:N)*fs/N</code>，或者把 fs 和 N 搞反。另外，信号频率不落在 fs/N 的整数倍上时，能量会泄漏到相邻频点，峰值会变矮、变宽，这不是代码错误。</p></div>
+
+  <h3><span class="sec">9.6</span>连续 LTI 系统：零状态响应</h3>
+  <p>系统函数 H(s) = (s + 5)/(s² + 3s + 2)，输入 e(t) = 3u(t)。用部分分式展开可以求得零状态响应的解析解 y<sub>zs</sub>(t) = 7.5 − 12e<sup>−t</sup> + 4.5e<sup>−2t</sup>。下面用 <code>lsim</code> 数值求解，并和解析解对比。</p>
+  <div class="cell" data-label="示例 9.6 · tf 与 lsim">
+<textarea>sys = tf([1 5], [1 3 2])
+t = 0:0.01:8;
+e = 3 * ones(size(t));                      % e(t) = 3u(t)
+yzs = lsim(sys, e, t);                      % 数值解（列向量）
+yth = 7.5 - 12*exp(-t) + 4.5*exp(-2*t);     % 解析解
+plot(t, yzs, 'LineWidth', 2); hold on
+plot(t, yth, 'r--', 'LineWidth', 1.5); hold off; grid on
+legend('lsim 数值解', '解析解', 'Location', 'southeast')
+xlabel('t (s)'); ylabel('y_{zs}(t)')
+fprintf('最大误差：%.2e\n', max(abs(yzs' - yth)));
+poles = pole(sys)</textarea>
+  </div>
+  <div class="cell" data-label="示例 9.7 · 二阶系统的阶跃响应：阻尼比的影响">
+<textarea>wn = 2;
+for zeta = [0.2 0.5 1]
+    G = tf(wn^2, [1 2*zeta*wn wn^2]);
+    [y, t] = step(G, 8);
+    plot(t, y, 'LineWidth', 1.5); hold on
+end
+hold off; grid on
+legend('\zeta = 0.2', '\zeta = 0.5', '\zeta = 1')
+xlabel('t (s)'); ylabel('y(t)'); title('二阶系统阶跃响应')</textarea>
+  </div>
+
+  <h3><span class="sec">9.7</span>频率响应</h3>
+  <p>RC 低通滤波器 H(s) = 1/(RCs + 1)。取 R = 1 kΩ、C = 1 μF，截止角频率 ω<sub>c</sub> = 1/(RC) = 1000 rad/s，在伯德图上对应幅频曲线下降 3 dB 的位置。</p>
+  <div class="cell" data-label="示例 9.8 · bode 伯德图">
+<textarea>R = 1e3; C = 1e-6;
+H = tf(1, [R*C 1]);
+bode(H)
+[mag, phase, w] = bode(H);
+[~, k] = min(abs(w - 1/(R*C)));
+fprintf('w = %.0f rad/s 处：%.2f dB，相位 %.1f°\n', w(k), 20*log10(mag(k)), phase(k));</textarea>
+  </div>
+  <div class="cell" data-label="示例 9.9 · 离散系统的频率响应 freqz">
+<textarea>b = ones(1, 5) / 5;     % 5 点滑动平均
+a = 1;
+freqz(b, a)</textarea>
+  </div>
+
+  <h3><span class="sec">9.8</span>符号运算（需要本地 MATLAB）</h3>
+  <p>求傅里叶变换、拉普拉斯变换、z 变换的解析式，要用 Symbolic Math Toolbox。实验台不支持符号计算，下面给出代码和数学上的参考结果。MATLAB 实际显示的式子写法可能不同，但彼此等价。</p>
+  <div class="cell static" data-label="示例 9.10 · fourier（本地运行）">
+<textarea>syms t w
+x = exp(-2*t) * sin(2*pi*t) * heaviside(t);
+X = simplify(fourier(x, t, w))
+fplot(abs(X), [-40 40]); grid on</textarea>
+<pre class="ref-out">X(ω) = 2π / ((2 + jω)² + 4π²)
+幅频特性在 ω = √(4π² − 4) ≈ 5.96 rad/s 处达到峰值</pre>
+  </div>
+  <div class="cell static" data-label="示例 9.11 · laplace / ilaplace / ztrans（本地运行）">
+<textarea>syms t s n z
+laplace(exp(-2*t))
+ilaplace((s + 5)/(s^2 + 3*s + 2) * 3/s)
+ztrans(0.5^n)</textarea>
+<pre class="ref-out">1/(s + 2)
+15/2 − 12e^(−t) + (9/2)e^(−2t)       （与 9.6 节的零状态响应一致）
+z/(z − 1/2)</pre>
+  </div>
+  <div class="note tip"><span class="note-tag">说明</span><p>符号结果最好再用数值方法验证一遍，就像 9.6 节那样用 <code>lsim</code> 对比解析解。符号运算出错时往往不报错，只是给出一个看起来合理的错误式子。</p></div>
+
+  <div class="challenge" data-check="conv" data-hint="y = conv(x, h); n 的起点是 nx(1) + nh(1)，终点是 nx(end) + nh(end)。">
+    <div class="task"><p>序列 <code>x = [1 2 3]</code> 定义在 n = −1, 0, 1 上，<code>h = [1 1 1]</code> 定义在 n = 0, 1, 2 上。求卷积 <code>y</code>，并写出对应的时间轴向量 <code>n</code>。</p></div>
+<textarea>x = [1 2 3];  nx = -1:1;
+h = [1 1 1];  nh = 0:2;
+y =
+n =
+stem(n, y, 'filled')</textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-signal"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-signal" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-model">下一章：数学建模 →</a></div>
+</section>
+
+<!-- ============================ 第 10 章 ============================ -->
+<section class="chapter" id="ch-model" data-ch data-num="10" data-title="数学建模">
+  <div class="ch-top"><span class="ch-num">第 10 章</span><span class="ch-meta">约 45 分钟 · 数模竞赛向</span></div>
+  <h2>数学建模常用工具</h2>
+  <hr class="ch-rule">
+  <p>数模国赛常见的几类问题：数据拟合与预测、插值、线性/整数/非线性规划、微分方程、综合评价。这一章每节一个可以直接改数据复用的模板。</p>
+  <ul class="learn"><li>polyfit 与 R²</li><li>lsqcurvefit 非线性拟合</li><li>interp1 插值</li><li>linprog / intlinprog</li><li>fmincon</li><li>ode45 传染病模型</li><li>熵权 TOPSIS</li><li>灰色预测 GM(1,1)</li></ul>
+
+  <h3><span class="sec">10.1</span>多项式拟合与拟合优度</h3>
+  <div class="cell" data-label="示例 10.1 · polyfit + R²">
+<textarea>x = [1 2 3 4 5 6 7 8];
+y = [2.1 3.9 6.2 7.8 10.1 12.2 13.8 16.1];
+p = polyfit(x, y, 1);                % 一次多项式：p(1)*x + p(2)
+yfit = polyval(p, x);
+SSE = sum((y - yfit).^2);            % 残差平方和
+SST = sum((y - mean(y)).^2);         % 总平方和
+R2 = 1 - SSE / SST;
+fprintf('y = %.4f x + %.4f，R^2 = %.4f\n', p(1), p(2), R2);
+plot(x, y, 'o', 'MarkerFaceColor', 'auto'); hold on
+xx = linspace(0, 9, 100);
+plot(xx, polyval(p, xx), 'LineWidth', 1.5); hold off; grid on
+legend('观测数据', '拟合直线', 'Location', 'northwest'); xlabel('x'); ylabel('y')</textarea>
+  </div>
+
+  <h3><span class="sec">10.2</span>非线性拟合</h3>
+  <p>模型不是多项式时（比如指数增长 y = a·e<sup>bt</sup>），用 <code>lsqcurvefit</code> 直接拟合参数。初值要大致靠谱，否则可能收敛到奇怪的地方。</p>
+  <div class="cell" data-label="示例 10.2 · 指数模型 lsqcurvefit">
+<textarea>t = 0:7;
+y = [2.0 2.7 3.6 4.9 6.6 9.0 12.1 16.4];
+model = @(p, t) p(1) * exp(p(2) * t);
+p = lsqcurvefit(model, [1 0.1], t, y);
+fprintf('y = %.4f e^(%.4f t)\n', p(1), p(2));
+plot(t, y, 'o'); hold on
+tt = linspace(0, 8, 200);
+plot(tt, model(p, tt), 'LineWidth', 1.5); hold off; grid on
+legend('数据', '拟合', 'Location', 'northwest'); xlabel('t'); ylabel('y')</textarea>
+  </div>
+
+  <h3><span class="sec">10.3</span>插值</h3>
+  <p>拟合要求曲线“整体靠近”数据，插值要求曲线<b>必须经过</b>每个数据点。补全缺测数据、加密采样时常用插值。</p>
+  <div class="cell" data-label="示例 10.3 · 线性插值与样条插值">
+<textarea>h = 0:3:24;                                   % 每 3 小时测一次
+T = [15 13 12 17 24 27 25 20 16];             % 温度
+hq = 0:0.25:24;
+Tl = interp1(h, T, hq);                       % 线性（默认）
+Ts = interp1(h, T, hq, 'spline');             % 三次样条
+plot(h, T, 'ko', 'MarkerFaceColor', 'auto'); hold on
+plot(hq, Tl, '--'); plot(hq, Ts, 'LineWidth', 1.5); hold off; grid on
+legend('测量值', '线性', '样条'); xlabel('时刻 / h'); ylabel('温度 / °C')
+T14 = interp1(h, T, 14, 'spline')             % 估计 14 点的温度</textarea>
+  </div>
+
+  <h3><span class="sec">10.4</span>线性规划 linprog</h3>
+  <p>某厂生产两种产品，单件利润分别为 3 和 5（千元）。三个车间的工时约束为 x₁ ≤ 4，2x₂ ≤ 12，3x₁ + 2x₂ ≤ 18。求利润最大的生产方案。</p>
+  <p>linprog 的标准形式是 <b>min f′x，s.t. Ax ≤ b，Aeq·x = beq，lb ≤ x ≤ ub</b>。求最大值就把目标系数取负。</p>
+  <div class="cell" data-label="示例 10.4 · 生产计划">
+<textarea>f = [-3; -5];                 % max 3x1 + 5x2  →  min -3x1 - 5x2
+A = [1 0
+     0 2
+     3 2];
+b = [4; 12; 18];
+lb = [0; 0];                  % x ≥ 0
+[x, fval] = linprog(f, A, b, [], [], lb, []);
+x
+maxProfit = -fval</textarea>
+  </div>
+
+  <h3><span class="sec">10.5</span>整数规划 intlinprog</h3>
+  <p>决策变量必须取整数时（人数、车辆数、是否选择某项目），用 <code>intlinprog</code>，第二个参数列出哪些变量是整数。下面是一个 0-1 背包问题：容量 15，选哪些物品价值最大。</p>
+  <div class="cell" data-label="示例 10.5 · 0-1 背包">
+<textarea>value  = [10 13 7 8 12];
+weight = [ 5  7 3 4  6];
+n = numel(value);
+f = -value';                         % 最大化价值
+intcon = 1:n;                        % 全部是整数变量
+A = weight; b = 15;                  % 总重量 ≤ 15
+lb = zeros(n, 1); ub = ones(n, 1);   % 0 ≤ x ≤ 1，配合整数约束就是 0-1 变量
+x = intlinprog(f, intcon, A, b, [], [], lb, ub);
+chosen = find(x' > 0.5)
+totalValue = value * x
+totalWeight = weight * x</textarea>
+  </div>
+
+  <h3><span class="sec">10.6</span>非线性规划 fmincon</h3>
+  <p>目标或约束是非线性的，用 <code>fmincon</code>。非线性约束写成一个函数，返回 c(x) ≤ 0 和 ceq(x) = 0 两部分。</p>
+  <div class="cell" data-label="示例 10.6 · 带非线性约束的最小化">
+<textarea>% min (x1-2)^2 + (x2-1)^2   s.t.  x1^2 - x2 <= 0,  x1 + x2 <= 2
+obj = @(x) (x(1) - 2)^2 + (x(2) - 1)^2;
+A = [1 1]; b = 2;
+x0 = [0; 0];
+[x, fval] = fmincon(obj, x0, A, b, [], [], [], [], @mycon)
+
+function [c, ceq] = mycon(x)
+    c = x(1)^2 - x(2);     % 非线性不等式约束 c(x) <= 0
+    ceq = [];              % 没有非线性等式约束
+end</textarea>
+  </div>
+  <div class="note tip"><span class="note-tag">说明</span><p>实验台的 fmincon 用增广拉格朗日法配合单纯形搜索近似求解，适合几个变量的小问题，结果和 MATLAB 可能在小数点后几位有差异。正式比赛请在本地 MATLAB 中运行，并换几个初值 x0 检查是否得到同一个解。</p></div>
+
+  <h3><span class="sec">10.7</span>微分方程：SIR 传染病模型</h3>
+  <p>S、I、R 分别是易感者、感染者、康复者人数，β 是感染率，γ 是康复率：dS/dt = −βSI/N，dI/dt = βSI/N − γI，dR/dt = γI。<code>ode45</code> 要求把方程写成“状态向量的导数 = f(t, y)”的形式。</p>
+  <div class="cell" data-label="示例 10.7 · ode45 求解 SIR">
+<textarea>beta = 0.3; gamma = 0.1; N = 1000;
+f = @(t, y) [ -beta*y(1)*y(2)/N
+               beta*y(1)*y(2)/N - gamma*y(2)
+               gamma*y(2) ];
+[t, y] = ode45(f, [0 160], [990; 10; 0]);
+plot(t, y, 'LineWidth', 1.5); grid on
+legend('S 易感者', 'I 感染者', 'R 康复者', 'Location', 'east')
+xlabel('时间 / 天'); ylabel('人数'); title('SIR 模型，R_0 = \beta/\gamma = 3')
+[Imax, k] = max(y(:, 2));
+fprintf('感染人数峰值约 %.0f 人，出现在第 %.1f 天\n', Imax, t(k));</textarea>
+  </div>
+  <div class="note trap"><span class="note-tag">易错</span><p>函数 f 必须返回<b>列向量</b>，长度和初值 y0 一样。二阶方程要先降阶：y″ + 0.5y′ + 4y = 0 写成 <code>@(t, y) [y(2); -0.5*y(2) - 4*y(1)]</code>。</p></div>
+
+  <h3><span class="sec">10.8</span>综合评价：熵权法 + TOPSIS</h3>
+  <p>评价类问题（选址、方案排序、绩效评估）的常用组合：熵权法根据数据离散程度确定指标权重，TOPSIS 按到正、负理想解的距离排序。整个流程都是矩阵运算，正好练习隐式扩展。</p>
+  <div class="cell" data-label="示例 10.8 · 4 个方案 × 3 个效益型指标">
+<textarea>X = [85 0.82 120
+     92 0.75 150
+     78 0.90 100
+     88 0.86 130];
+[n, m] = size(X);
+Z = (X - min(X)) ./ (max(X) - min(X));     % 1) 极差标准化（效益型）
+P = (Z + 1e-12) ./ sum(Z + 1e-12);         % 2) 各方案在各指标下的比重
+E = -sum(P .* log(P)) / log(n);            %    信息熵
+w = (1 - E) / sum(1 - E)                   %    熵权
+V = Z .* w;                                % 3) 加权
+Dp = sqrt(sum((V - max(V)).^2, 2));        %    到正理想解的距离
+Dn = sqrt(sum((V - min(V)).^2, 2));        %    到负理想解的距离
+C = Dn ./ (Dp + Dn)                        %    相对贴近度，越大越好
+[~, order] = sort(C, 'descend');
+fprintf('排名：方案 %d > %d > %d > %d\n', order);</textarea>
+  </div>
+  <div class="note model"><span class="note-tag">数模提示</span><p>成本型指标（越小越好）要先正向化，比如 <code>(max(x) - x) ./ (max(x) - min(x))</code>。论文里要写清楚每一步的公式，并给出权重表；评委最关心的是权重是否合理、结果是否稳定，最好补一个灵敏度分析。</p></div>
+
+  <h3><span class="sec">10.9</span>灰色预测 GM(1,1)</h3>
+  <p>数据少（通常 4 到 10 期）而又要做短期预测时，常用 GM(1,1)。步骤是：累加生成、构造背景值、最小二乘估计参数 a、b，再还原预测值。</p>
+  <div class="cell" data-label="示例 10.9 · GM(1,1)">
+<textarea>x0 = [71.1 72.4 72.4 72.1 71.4 72.0 71.6];
+n = numel(x0);
+x1 = cumsum(x0);                           % 一次累加
+z1 = 0.5 * (x1(2:end) + x1(1:end-1));      % 背景值
+Bm = [-z1', ones(n-1, 1)];
+Y = x0(2:end)';
+ab = Bm \ Y;  a = ab(1);  b = ab(2);       % 最小二乘
+k = 0:n+1;                                 % 多算两期
+x1hat = (x0(1) - b/a) * exp(-a*k) + b/a;
+x0hat = [x0(1), diff(x1hat)];              % 累减还原
+relErr = abs(x0hat(1:n) - x0) ./ x0;
+fprintf('a = %.5f, b = %.4f, 平均相对误差 %.2f%%\n', a, b, mean(relErr)*100);
+fprintf('后两期预测：%.2f  %.2f\n', x0hat(end-1:end));
+plot(1:n, x0, 'o', 'MarkerFaceColor', 'auto'); hold on
+plot(1:n+2, x0hat, 's--', 'LineWidth', 1.2); hold off; grid on
+legend('原始数据', 'GM(1,1)', 'Location', 'southwest'); xlabel('期数')</textarea>
+  </div>
+
+  <h3><span class="sec">10.10</span>读写数据文件（需要本地 MATLAB）</h3>
+  <div class="cell static" data-label="示例 10.10 · readmatrix / readtable / writematrix">
+<textarea>data = readmatrix('data.xlsx');          % 读成纯数值矩阵
+T = readtable('data.csv');               % 读成带列名的表格
+x = T.time; y = T.value;                 % 按列名取数据
+writematrix(result, 'result.xlsx');      % 把结果写回 Excel</textarea>
+<pre class="ref-out">浏览器里的实验台读不到电脑上的文件。练习时可以先把数据复制进代码，写成矩阵：
+data = [1 2.1; 2 3.9; 3 6.2];</pre>
+  </div>
+
+  <div class="challenge" data-check="fit2" data-hint="p = polyfit(x, y, 2); yfit = polyval(p, x); R2 = 1 - sum((y - yfit).^2) / sum((y - mean(y)).^2);">
+    <div class="task"><p>对下面的数据做二次多项式拟合，系数存进 <code>p</code>，并计算拟合优度存进 <code>R2</code>。</p></div>
+<textarea>x = 0:0.5:5;
+y = [2.02 1.61 1.52 1.63 2.01 2.62 3.48 4.64 6.01 7.62 9.50];
+p =
+R2 = </textarea>
+  </div>
+
+  <div class="quiz" data-quiz="ch-model"></div>
+  <div class="ch-end"><button class="done-btn" type="button" data-ch="ch-model" aria-pressed="false"><span class="done-box" aria-hidden="true"></span><span class="done-label">标记本章为已学完</span></button><a class="next-link" href="#ch-errors">附录：常见报错 →</a></div>
+</section>
+
+<!-- ============================ 附录 A ============================ -->
+<section class="chapter" id="ch-errors" data-ch data-count="no" data-num="A" data-title="常见报错对照">
+  <div class="ch-top"><span class="ch-num">附录 A</span><span class="ch-meta">遇到报错时回来查</span></div>
+  <h2>常见报错对照</h2>
+  <hr class="ch-rule">
+  <p>MATLAB 的报错信息其实写得很具体，读懂了就知道错在哪。下表左边是英文原文，下面一行是中文版 MATLAB 里大致的说法（不同版本措辞略有差异）。点「复现」会把一段会出这个错的代码放进命令行窗口。</p>
+  <div class="tbl-wrap"><table class="tbl err-tbl">
+    <thead><tr><th>报错信息</th><th>常见原因与改法</th><th></th></tr></thead>
+    <tbody>
+      <tr><td><div class="en">Index exceeds the number of array elements. Index must not exceed 3.</div><div class="zh">索引超出数组元素的数目。索引不能超过 3。</div></td><td>下标比数组长度大。常见于循环上限写错，比如 <code>for k = 1:n+1</code>，或者在 x(k+1) 里越界。用 <code>numel</code> 检查长度。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="x = [1 2 3];\nx(4)">复现</button></td></tr>
+      <tr><td><div class="en">Array indices must be positive integers or logical values.</div><div class="zh">数组索引必须为正整数或逻辑值。</div></td><td>用了 0、负数或小数做下标。MATLAB 从 1 开始数；计算出来的下标用 <code>round</code> 处理。也可能是把变量名起成了 i、sum 之类，被当成了索引。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="v = 1:5;\nv(0)">复现</button></td></tr>
+      <tr><td><div class="en">Incorrect dimensions for matrix multiplication. Check that the number of columns in the first matrix matches the number of rows in the second matrix. To operate on each element of the matrix individually, use TIMES (.*) for elementwise multiplication.</div><div class="zh">用于矩阵乘法的维度不正确。请检查并确保第一个矩阵中的列数与第二个矩阵中的行数匹配。要单独对矩阵的每个元素进行运算，请使用 TIMES (.*) 执行按元素相乘。</div></td><td>想逐元素相乘却写了 <code>*</code>。改成 <code>.*</code>；同理 <code>/</code> 改 <code>./</code>，<code>^</code> 改 <code>.^</code>。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="t = 0:0.1:1;\ny = exp(-t) * sin(t)">复现</button></td></tr>
+      <tr><td><div class="en">Arrays have incompatible sizes for this operation.</div><div class="zh">对于此运算，数组的大小不兼容。</div></td><td>逐元素运算的两个数组尺寸对不上，比如 1×3 和 1×4。检查是不是两个向量的采样点数不同，或者一个是行一个是列。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="a = [1 2 3];\nb = [1 2 3 4];\na + b">复现</button></td></tr>
+      <tr><td><div class="en">Unrecognized function or variable 'x'.</div><div class="zh">函数或变量 'x' 无法识别。</div></td><td>变量还没赋值就用了，或者名字拼错、大小写不一致。也可能是缺工具箱，或者自己写的函数文件不在当前文件夹。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="clear\ny = X + 1">复现</button></td></tr>
+      <tr><td><div class="en">Dimensions of arrays being concatenated are not consistent.</div><div class="zh">要串联的数组的维度不一致。</div></td><td>用方括号拼接时行数或列数对不上，比如 <code>[1 2; 3]</code>。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="A = [1 2; 3]">复现</button></td></tr>
+      <tr><td><div class="en">Unable to perform assignment because the left and right sides have a different number of elements.</div><div class="zh">无法执行赋值，因为左侧和右侧的元素数目不同。</div></td><td>想把一个向量塞进单个位置，比如 <code>x(k) = [1 2]</code>。检查等号右边的结果是不是标量；要存向量就用矩阵的一行 <code>X(k, :) = …</code> 或元胞 <code>c{k} = …</code>。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="x = zeros(1, 3);\nx(2) = [5 6]">复现</button></td></tr>
+      <tr><td><div class="en">Vectors must be the same length.</div><div class="zh">向量长度必须相同。</div></td><td><code>plot(x, y)</code> 的 x 和 y 点数不同。常见于 <code>t = 0:0.01:1</code> 和另一个用 linspace 生成的向量混用。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="x = 0:0.1:1;\ny = sin(linspace(0, 1, 10));\nplot(x, y)">复现</button></td></tr>
+      <tr><td><div class="en">Not enough input arguments.</div><div class="zh">输入参数的数目不足。</div></td><td>调用函数时少给了参数。也常见于直接点“运行”一个需要输入的函数文件：函数要在命令行里带参数调用。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="f = @(x, y) x + y;\nf(1)">复现</button></td></tr>
+      <tr><td><div class="en">Too many output arguments.</div><div class="zh">输出参数太多。</div></td><td>把没有返回值的函数写在了等号右边，或者要了比函数定义更多的输出。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="r = disp(5)">复现</button></td></tr>
+      <tr><td><div class="en">Invalid expression. Check for missing multiplication operator, missing or unbalanced delimiters, or other syntax error.</div><div class="zh">表达式无效。请检查缺失的乘法运算符、缺失或不对称的分隔符或者其他语法错误。</div></td><td>括号不成对，或者把 <code>2*x</code> 写成了 <code>2x</code>。另一大来源是中文标点：<code>，</code>、<code>；</code>、<code>（）</code>、中文引号。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="y = sin(2*(x + 1)">复现</button></td></tr>
+      <tr><td><div class="en">Warning: Matrix is singular to working precision.</div><div class="zh">警告：矩阵为奇异工作精度。</div></td><td>系数矩阵不可逆（行列式为 0 或接近 0），方程组无解或有无穷多解。检查方程是否列重复了，或者用 <code>rank</code> 看矩阵的秩。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="A = [1 2; 2 4];\nA \ [1; 2]">复现</button></td></tr>
+      <tr><td><div class="en">At least one END is missing. The statement beginning here does not have a matching end.</div><div class="zh">此语句缺少对应的 END。</div></td><td>if、for、while、switch、function 少了 end。养成写完开头立刻补上 end 的习惯，MATLAB 编辑器的自动缩进也能帮你发现。</td><td><button class="btn btn-ghost btn-xs" type="button" data-try="for k = 1:3\n    disp(k)">复现</button></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================ 附录 B ============================ -->
+<section class="chapter" id="ch-ref" data-ch data-count="no" data-num="B" data-title="函数速查">
+  <div class="ch-top"><span class="ch-num">附录 B</span><span class="ch-meta">按名称或中文用途搜索</span></div>
+  <h2>函数速查</h2>
+  <hr class="ch-rule">
+  <p>下表列出实验台支持的常用函数。在命令行窗口里输入 <code>help 函数名</code> 也能看到同样的说明。点「试一试」会把示例代码放进命令行窗口。</p>
+  <div class="ref-tools">
+    <div class="ref-search"><label class="sr-only" for="ref-q" style="position:absolute;left:-9999px">搜索函数</label><input id="ref-q" type="search" placeholder="搜索：sum、插值、频谱、最小值……" autocomplete="off"><span id="ref-count"></span></div>
+    <div class="chips" id="ref-chips" role="group" aria-label="按类别筛选"></div>
+  </div>
+  <div class="tbl-wrap"><table class="tbl ref-tbl">
+    <thead><tr><th>函数</th><th>作用与用法</th><th></th></tr></thead>
+    <tbody id="ref-table-body"></tbody>
+  </table></div>
+
+  <footer class="foot">
+    <p>本站的实验台是用 JavaScript 写的 MATLAB 语法子集解释器，在你的浏览器里运行，不是 MathWorks 的 MATLAB。它覆盖了课程和竞赛中最常用的语法与函数；随机数序列、部分数值算法的细节和显示格式会与 MATLAB 有差异，重要结果请在本地 MATLAB 中复核。</p>
+    <p>学习进度、测验答案和练习草稿只保存在当前浏览器里，换设备或清除浏览器数据后会丢失。MATLAB 是 The MathWorks, Inc. 的注册商标。</p>
+  </footer>
+</section>
+  </main>
+</div>
+<div id="toc-scrim"></div>
+
+<section id="console" class="console" hidden aria-label="命令行窗口">
+  <div class="con-bar">
+    <span class="con-title">命令行窗口</span>
+    <div class="con-tabs" role="tablist" aria-label="命令行窗口面板">
+      <button class="con-tab" type="button" role="tab" data-tab="cmd">命令行</button>
+      <button class="con-tab" type="button" role="tab" data-tab="ws">工作区</button>
+      <button class="con-tab" type="button" role="tab" data-tab="fig">图窗</button>
+    </div>
+    <div class="con-actions">
+      <button class="btn btn-ghost btn-sm" type="button" id="con-clear" title="清除所有变量、图窗和输出">清空</button>
+      <button class="btn btn-ghost btn-sm" type="button" id="con-close">关闭</button>
+    </div>
+  </div>
+  <div class="con-body">
+    <div class="con-pane con-cmd">
+      <div class="cmd-log" id="cmd-log" aria-live="polite"></div>
+      <div class="cmd-line">
+        <span class="prompt" aria-hidden="true">&gt;&gt;</span>
+        <div class="ed cmd-ed"><pre class="ed-hl" id="cmd-hl" aria-hidden="true"></pre><textarea class="ed-ta" id="cmd-input" rows="1" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="输入 MATLAB 命令，按 Enter 执行"></textarea></div>
+      </div>
+    </div>
+    <div class="con-pane con-ws">
+      <div class="pane-cap">工作区</div>
+      <table class="ws"><thead><tr><th>名称</th><th>值</th><th>尺寸 / 类型</th></tr></thead><tbody id="ws-body"></tbody></table>
+    </div>
+    <div class="con-pane con-fig"><div class="pane-cap" style="margin:-10px -10px 10px">图窗</div><div id="cmd-fig"></div></div>
+  </div>
+</section>
+
+<!--ENGINE-->
+<!--DATA-->
+<!--APP-->
